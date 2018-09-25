@@ -2898,14 +2898,14 @@ Begin Window win_main
       Underline       =   False
       Visible         =   True
       Width           =   345
-      Begin Listbox lbToolkitMap
+      Begin Listbox lbTnSMap
          AutoDeactivate  =   True
          AutoHideScrollbars=   True
          Bold            =   False
          Border          =   True
          ColumnCount     =   3
          ColumnsResizable=   True
-         ColumnWidths    =   "50%,30%,20%"
+         ColumnWidths    =   "45%,35%,20%"
          DataField       =   ""
          DataSource      =   ""
          DefaultRowHeight=   -1
@@ -3995,7 +3995,7 @@ End
 		Protected Sub ProcessData()
 		  dim i, CRLFPos, DelimiterLength as integer
 		  dim DataRecord, ParticipantID, SQL, TotalTime as string
-		  dim result as Boolean
+		  dim result, Found as Boolean
 		  dim Reader as new ReaderSupport
 		  dim rs as RecordSet
 		  
@@ -4033,7 +4033,19 @@ End
 		            TnSSocket.write Reader.TK_AckStore(Reader.TK_Source,Reader.TK_MessageNumber)
 		            
 		          else
-		            
+		            'check to see if it is in the T&S Map
+		            i=0
+		            Found=False
+		            do until Found or i >= lbTnSMap.ListCount
+		              if Reader.TK_Source = lbTnSMap.Cell(i,0) then
+		                Found=true
+		              else
+		                i=i+1
+		              end if
+		            loop
+		            if not(Found) then
+		              UpdateTnSMap(Reader.TK_Source)
+		            end if
 		          end if
 		        end if
 		      end if
@@ -4330,6 +4342,20 @@ End
 		      
 		    End if
 		  end if
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub UpdateTnSMap(TK_Source as String)
+		  Dim TPID as String
+		  Dim i as Integer
+		  
+		  TPID=Str(Val(TK_Source))
+		  
+		  lbTnSMap.AddRow ""
+		  lbTnSMap.Cell(lbTnSMap.LastIndex,0)=TK_Source
+		  lbTnSMap.Cell(lbTnSMap.LastIndex,1)="" // force the cell to paint
+		  
 		End Sub
 	#tag EndMethod
 
@@ -5347,22 +5373,22 @@ End
 #tag Events bbClearTimes
 	#tag Event
 		Sub Action()
-		      
+		  
 		  lbList.CellTag(0,App.ColNo_Flag)=""
 		  lbList.Cell(0,App.ColNo_Number)=""
 		  lbList.Cell(0,App.ColNo_Name)=""
 		  lbList.Cell(0,App.ColNo_TotalTime)=TruncateTime("")
-		    
+		  
 		  lbList.CellTag(1,App.ColNo_Flag)=""
 		  lbList.Cell(1,App.ColNo_Number)=""
 		  lbList.Cell(1,App.ColNo_Name)=""
 		  lbList.Cell(1,App.ColNo_TotalTime)=TruncateTime("")
-		   
+		  
 		  lbList.CellTag(2,App.ColNo_Flag)=""
 		  lbList.Cell(2,App.ColNo_Number)=""
 		  lbList.Cell(2,App.ColNo_Name)=""
 		  lbList.Cell(2,App.ColNo_TotalTime)=TruncateTime("")
-		      
+		  
 		  lbList.CellTag(3,App.ColNo_Flag)=""
 		  lbList.Cell(3,App.ColNo_Number)=""
 		  lbList.Cell(3,App.ColNo_Name)=""
@@ -5412,24 +5438,14 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events lbToolkitMap
+#tag Events lbTnSMap
 	#tag Event
 		Function CellClick(row as Integer, column as Integer, x as Integer, y as Integer) As Boolean
-		  Select Case column
-		    
-		    
-		  Case 2
-		    Me.CellType(row,column)=ListBox.TypeEditable
-		    Me.EditCell(row,column)
-		    
-		  Case 5
-		    Me.Cell(row,column)="0"
-		    Me.ListIndex=-1
-		    
-		  Else
-		    Beep
-		    
-		  End Select
+		  'If column = 1 Then
+		  'Me.CellType(row,column)=ListBox.TypeEditable
+		  'Me.EditCell(row,column)
+		  'End If
+		  
 		End Function
 	#tag EndEvent
 	#tag Event
@@ -5440,7 +5456,7 @@ End
 	#tag Event
 		Function CellTextPaint(g As Graphics, row As Integer, column As Integer, x as Integer, y as Integer) As Boolean
 		  Select Case column
-		  Case 2 // PopupMenu
+		  Case 1 // PopupMenu
 		    // Draw an arrow to indicate that clicking this field will
 		    // display a menu
 		    g.ForeColor = &c000000
@@ -5448,18 +5464,18 @@ End
 		    // Points for a triangle on the right side of the cell
 		    Dim points(6) As Integer
 		    points(1) = g.Width - 10
-		    points(2) = 1
+		    points(2) = 4
 		    points(3) = g.Width
-		    points(4) = 1
+		    points(4) = 4
 		    points(5) = g.Width - 5
-		    points(6) = 10
+		    points(6) = 14
 		    
 		    g.FillPolygon(points)
 		    
 		    If Me.CellTag(row, column) <> "" Then
 		      g.DrawString(Me.CellTag(row, column), x, y)
 		    Else
-		      g.DrawString("White", x, y)
+		      g.DrawString("Ignore", x, y)
 		    End If
 		    Return True
 		    
@@ -5473,7 +5489,7 @@ End
 		  Dim row As Integer = Me.RowFromXY(x, y)
 		  Dim col As Integer = Me.ColumnFromXY(x, y)
 		  
-		  If col = 2 Then
+		  If col = 1 Then
 		    Me.ListIndex = row
 		    Me.Selected(row) = True
 		    
@@ -5492,6 +5508,13 @@ End
 		    End If
 		  End If
 		End Sub
+	#tag EndEvent
+	#tag Event
+		Function MouseDown(x As Integer, y As Integer) As Boolean
+		  If Me.ColumnFromXY(x, y) = 1 Then
+		    Return True
+		  End If
+		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag ViewBehavior
