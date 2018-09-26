@@ -2849,7 +2849,7 @@ Begin Window win_main
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   654
+      Left            =   674
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -2950,6 +2950,39 @@ Begin Window win_main
          _ScrollOffset   =   0
          _ScrollWidth    =   -1
       End
+   End
+   Begin CheckBox cbDisplayElite
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   "Display Elite Format"
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   "Check to display Elite Format for racers."
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   674
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      State           =   1
+      TabIndex        =   84
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   284
+      Transparent     =   False
+      Underline       =   False
+      Value           =   True
+      Visible         =   True
+      Width           =   163
    End
 End
 #tag EndWindow
@@ -3102,6 +3135,32 @@ End
 		  rs.Close
 		  
 		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function GetPassingType(Source as String) As String
+		  Dim i as Integer
+		  Dim Found as Boolean
+		  Dim Type as String
+		  
+		  i=0
+		  Found=False
+		  do until Found or i >= lbTnSMap.ListCount
+		    if Source = lbTnSMap.Cell(i,0) then
+		      Found=true
+		    else
+		      i=i+1
+		    end if
+		  loop
+		  
+		  If Found Then
+		    Type=lbTnSMap.CellTag(i,1)
+		  Else
+		    Type="Not Found"
+		  End If
+		  
+		  Return Type
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -3995,7 +4054,7 @@ End
 		Protected Sub ProcessData()
 		  dim i, CRLFPos, DelimiterLength as integer
 		  dim DataRecord, ParticipantID, SQL, TotalTime as string
-		  dim result, Found as Boolean
+		  dim result as Boolean
 		  dim Reader as new ReaderSupport
 		  dim rs as RecordSet
 		  
@@ -4026,7 +4085,7 @@ End
 		          if Reader.PassingRecord and Reader.LastSeen = false then // it's a passing record
 		            
 		            for i = 0 to UBound(Reader.TK_TXCode)
-		              UpdateBoard(Reader.TK_TXCode(i), Reader.TK_Time(i))
+		              UpdateBoard(Reader.TK_Source, Reader.TK_TXCode(i), Reader.TK_Time(i))
 		            next
 		            redim Reader.TK_TXCode(0)
 		            redim Reader.TK_Time(0)
@@ -4034,16 +4093,8 @@ End
 		            
 		          else
 		            'check to see if it is in the T&S Map
-		            i=0
-		            Found=False
-		            do until Found or i >= lbTnSMap.ListCount
-		              if Reader.TK_Source = lbTnSMap.Cell(i,0) then
-		                Found=true
-		              else
-		                i=i+1
-		              end if
-		            loop
-		            if not(Found) then
+		            
+		            if GetPassingType(Reader.TK_Source) = "Not Found" then
 		              UpdateTnSMap(Reader.TK_Source)
 		            end if
 		          end if
@@ -4298,7 +4349,7 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub UpdateBoard(TXCode As String, Time As String)
+		Sub UpdateBoard(Source As String, TXCode As String, Time As String)
 		  Dim idx As Integer
 		  Dim RacerName, TotalTime as String
 		  Dim CurrentTime As New Date
@@ -4312,36 +4363,42 @@ End
 		    
 		    If Not(arDisplayed(idx)) or Not(cbDisplayOnce.Value) Then
 		      
-		      // calculate total time
-		      TotalTime=app.CalcTimeDifference(Time, arStartTime(idx),pmTimeTrucation.ListIndex)
-		      
-		      TotalTime=TruncateTime(TotalTime)
-		      
-		      TotalTime=app.StripTime(TotalTime)
-		      
-		      
-		      // build racer name
-		      If pmDisplaySize.ListIndex = 0 Then
+		      If GetPassingType(Source) = "Elite Trigger" and cbDisplayElite.Value Then 
 		        
-		        If Len(arLastName(idx))>=9 Then
-		          RacerName=Left(arLastName(idx),11)
-		        Else
-		          RacerName=arFirstName(idx).Left(1)+". "+arLastName(idx)
-		        End If
+		        MsgBox("Elite")
+		        
 		      Else
-		        RacerName=arFirstName(idx)+" "+arLastName(idx)
-		        If Len(RacerName)>21 Then
-		          RacerName=Left(RacerName,21)+"..."
+		        // calculate total time
+		        TotalTime=app.CalcTimeDifference(Time, arStartTime(idx),pmTimeTrucation.ListIndex)
+		        
+		        TotalTime=TruncateTime(TotalTime)
+		        
+		        TotalTime=app.StripTime(TotalTime)
+		        
+		        
+		        // build racer name
+		        If pmDisplaySize.ListIndex = 0 Then
+		          
+		          If Len(arLastName(idx))>=9 Then
+		            RacerName=Left(arLastName(idx),11)
+		          Else
+		            RacerName=arFirstName(idx).Left(1)+". "+arLastName(idx)
+		          End If
+		        Else
+		          RacerName=arFirstName(idx)+" "+arLastName(idx)
+		          If Len(RacerName)>21 Then
+		            RacerName=Left(RacerName,21)+"..."
+		          End If
 		        End If
-		      End If
-		      
-		      // post on screen
-		      PostToScreen(arBib(idx), RacerName, arCountry(idx), TotalTime)
-		      
-		      arDisplayed(idx)=True
-		      
-		    End if
-		  end if
+		        
+		        // post on screen
+		        PostToScreen(arBib(idx), RacerName, arCountry(idx), TotalTime)
+		        
+		        arDisplayed(idx)=True
+		        
+		      End if
+		    End If
+		  End If
 		End Sub
 	#tag EndMethod
 
@@ -4354,7 +4411,7 @@ End
 		  
 		  lbTnSMap.AddRow ""
 		  lbTnSMap.Cell(lbTnSMap.LastIndex,0)=TK_Source
-		  lbTnSMap.Cell(lbTnSMap.LastIndex,1)="" // force the cell to paint
+		  lbTnSMap.CellTag(lbTnSMap.LastIndex,1)="Ignore" // force the cell to paint
 		  
 		End Sub
 	#tag EndMethod
@@ -5495,15 +5552,14 @@ End
 		    
 		    Dim base As New MenuItem
 		    base.Append(New MenuItem("Ignore"))
-		    base.Append(New MenuItem("Finish Line"))
-		    base.Append(New MenuItem("Detail Trigger"))
+		    base.Append(New MenuItem("Finish Time"))
+		    base.Append(New MenuItem("Elite Trigger"))
 		    
 		    Dim selectedMenu As MenuItem
 		    selectedMenu = base.PopUp
 		    
 		    If selectedMenu <> Nil Then
-		      // CellTextPaint will check for a value in the CellTag
-		      // and display it.
+		      // CellTextPaint will check for a value in the CellTag and display it.
 		      Me.CellTag(row, col) = selectedMenu.Text
 		    End If
 		  End If
