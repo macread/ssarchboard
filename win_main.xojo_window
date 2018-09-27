@@ -2984,6 +2984,14 @@ Begin Window win_main
       Visible         =   True
       Width           =   163
    End
+   Begin Timer EliteTimer
+      Index           =   -2147483648
+      LockedInPosition=   False
+      Mode            =   2
+      Period          =   1000
+      Scope           =   0
+      TabPanelIndex   =   0
+   End
 End
 #tag EndWindow
 
@@ -3081,6 +3089,53 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub EliteStack_Push(idx as Integer, StopTime as String)
+		  'Doing this in a method incase there turns out to be more than one item to the stack
+		  
+		  arEliteStackAthlete.Append idx
+		  arEliteStackStopTime.Append ""
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub EliteStack_Remove(idx As Integer, StopTime As String)
+		  'Removes the runner from the stack,  stops the Elite Timer, updates the Elite Screen
+		  
+		  Dim StackIdx as Integer
+		  Dim RunTime, TotalTime as String
+		  
+		  'Remove from the stack
+		  StackIdx = arEliteStackAthlete.IndexOf(idx)
+		  If StackIdx >= 0 Then
+		    arEliteStackAthlete.Remove(idx)
+		    arEliteStackStopTime.Remove(idx)
+		    
+		    'stop the Elite Timer
+		    EliteTimer.Mode = Timer.ModeOff
+		    
+		    'update the Elite Screen with times calculated here, just in case the athlete crossing the finish line passed the athlete being displayed on the screen
+		    EliteName = arFirstName(idx) + " " + arLastName(idx)
+		    EliteSwimTime = arSwimTime(idx)
+		    EliteBikeTime = arBikeTime(idx)
+		    
+		    RunTime = app.CalcTimeDifference(Time, arT2TOD(idx),pmTimeTrucation.ListIndex)
+		    RunTime = TruncateTime(RunTime)
+		    RunTime = app.StripTime(RunTime)
+		    
+		    EliteRunTime = RunTime
+		    
+		    TotalTime = app.CalcTimeDifference(Time, arStartTime(idx),pmTimeTrucation.ListIndex)
+		    TotalTime = TruncateTime(TotalTime)
+		    TotalTime = app.StripTime(TotalTime)
+		    
+		    LastEliteStopTime = StopTime
+		    
+		  End If
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function FindStartOfLastFive(Number As Integer) As Integer
 		  Dim i As Integer
 		  
@@ -3171,7 +3226,7 @@ End
 		  Dim IncomingData, SQLStatement, Seperator as String
 		  Dim TXCode, Number, Name, Category, Extra1, Extra2 as String
 		  Dim i, LineNumber, Duplicates, Added, Ignored as Integer
-		  Dim FirstNameIdx, LastNameIdx, TXCodeIdx, NumberIdx, CountryIdx, StartTimeIdx, Extra2Idx as Integer
+		  Dim FirstNameIdx, LastNameIdx, TXCodeIdx, NumberIdx, CountryIdx, StartTimeIdx, Extra2Idx, SwimTimeIdx, BikeTimeIdx, T2TODIdx as Integer
 		  Dim Today as new date
 		  
 		  Dim dlg As New OpenDialog
@@ -3209,13 +3264,16 @@ End
 		    
 		    ImportFilePath=f.AbsolutePath
 		    
-		    ReDim arBib(0)
-		    ReDim arChip(0)
-		    ReDim arCountry(0)
-		    ReDim arFirstName(0)
-		    ReDim arLastName(0)
-		    ReDim arStartTime(0)
-		    ReDim arDisplayed(0)
+		    Redim arBib(0)
+		    Redim arChip(0)
+		    Redim arCountry(0)
+		    Redim arFirstName(0)
+		    Redim arLastName(0)
+		    Redim arStartTime(0)
+		    Redim arDisplayed(0)
+		    Redim arSwimTime(0)
+		    Redim arBikeTime(0)
+		    Redim arT2TOD(0)
 		    
 		    lblParticipantDataName.Text=f.Name
 		    ImportStream=f.OpenAsTextFile
@@ -3244,7 +3302,8 @@ End
 		        StartTimeIdx=HeaderList.IndexOf("START_TIME")
 		      End If
 		      
-		      If (TXCodeIdx>=0 and NumberIdx>=0 and FirstNameIdx>=0 and LastNameIdx>=0 and CountryIdx>=0 and StartTimeIdx>=0) then
+		      
+		      If (TXCodeIdx>=0 and NumberIdx>=0 and FirstNameIdx>=0 and LastNameIdx>=0 and CountryIdx>=0 and StartTimeIdx>=0 and SwimTimeIdx>=0 and BikeTimeIdx>=0 and T2TODIdx>=0) then
 		        
 		        'Loop through the file and import the data
 		        'read the data
@@ -3265,7 +3324,19 @@ End
 		              arFirstName.Append Titlecase(FieldList(FirstNameIDX))
 		              arLastName.Append Uppercase(FieldList(LastNameIdx))
 		              arCountry.Append FieldList(CountryIdx)
-		              arStartTime.Append RaceDateInput.Text+" "+FieldList(StartTimeIdx)+"0"   
+		              If FieldList(StartTimeIdx).Len = 11 Then 'RunScore does not send leading zeros. Most likely the start time will be before 10am, but...
+		                arStartTime.Append RaceDateInput.Text+" "+FieldList(StartTimeIdx)+"0"
+		              Else
+		                arStartTime.Append RaceDateInput.Text+" "+FieldList(StartTimeIdx)
+		              End If
+		              arSwimTime.Append FieldList(SwimTimeIdx)
+		              arBikeTime.Append FieldList(BikeTimeIdx)
+		              If FieldList(StartTimeIdx).Len = 11 Then 'RunScore does not send leading zeros. Most likely the T2 time will be after 10am, but for a 70.3 maybe not
+		                arT2TOD.Append RaceDateInput.Text+" "+FieldList(T2TODIdx)+"0"
+		              Else
+		                arT2TOD.Append RaceDateInput.Text+" "+FieldList(T2TODIdx)
+		              End If
+		              
 		              arDisplayed.Append False 
 		              
 		              Added=Added+1
@@ -4351,7 +4422,7 @@ End
 	#tag Method, Flags = &h0
 		Sub UpdateBoard(Source As String, TXCode As String, Time As String)
 		  Dim idx As Integer
-		  Dim RacerName, TotalTime as String
+		  Dim RacerName, TotalTime, RunTime as String
 		  Dim CurrentTime As New Date
 		  
 		  LastPassingTime=CurrentTime.TotalSeconds
@@ -4365,36 +4436,46 @@ End
 		      
 		      If GetPassingType(Source) = "Elite Trigger" and cbDisplayElite.Value Then 
 		        
-		        MsgBox("Elite")
+		        'push on elite display stack
+		        EliteStack_Push(idx)
 		        
 		      Else
-		        // calculate total time
-		        TotalTime=app.CalcTimeDifference(Time, arStartTime(idx),pmTimeTrucation.ListIndex)
 		        
-		        TotalTime=TruncateTime(TotalTime)
-		        
-		        TotalTime=app.StripTime(TotalTime)
-		        
-		        
-		        // build racer name
-		        If pmDisplaySize.ListIndex = 0 Then
+		        If cbDisplayElite.Value Then
+		          'Stop run clock
 		          
-		          If Len(arLastName(idx))>=9 Then
-		            RacerName=Left(arLastName(idx),11)
-		          Else
-		            RacerName=arFirstName(idx).Left(1)+". "+arLastName(idx)
-		          End If
+		          'Stop total time clock
+		          
 		        Else
-		          RacerName=arFirstName(idx)+" "+arLastName(idx)
-		          If Len(RacerName)>21 Then
-		            RacerName=Left(RacerName,21)+"..."
+		          
+		          // calculate total time
+		          TotalTime=app.CalcTimeDifference(Time, arStartTime(idx),pmTimeTrucation.ListIndex)
+		          
+		          TotalTime=TruncateTime(TotalTime)
+		          
+		          TotalTime=app.StripTime(TotalTime)
+		          
+		          
+		          // build racer name
+		          If pmDisplaySize.ListIndex = 0 Then
+		            
+		            If Len(arLastName(idx))>=9 Then
+		              RacerName=Left(arLastName(idx),11)
+		            Else
+		              RacerName=arFirstName(idx).Left(1)+". "+arLastName(idx)
+		            End If
+		          Else
+		            RacerName=arFirstName(idx)+" "+arLastName(idx)
+		            If Len(RacerName)>21 Then
+		              RacerName=Left(RacerName,21)+"..."
+		            End If
 		          End If
+		          
+		          // post on screen
+		          PostToScreen(arBib(idx), RacerName, arCountry(idx), TotalTime)
+		          
+		          arDisplayed(idx)=True
 		        End If
-		        
-		        // post on screen
-		        PostToScreen(arBib(idx), RacerName, arCountry(idx), TotalTime)
-		        
-		        arDisplayed(idx)=True
 		        
 		      End if
 		    End If
@@ -4422,6 +4503,10 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		arBikeTime() As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		arChip() As String
 	#tag EndProperty
 
@@ -4434,6 +4519,14 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		arEliteStackAthlete() As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		arEliteStackStopTime() As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		arFirstName() As String
 	#tag EndProperty
 
@@ -4443,6 +4536,14 @@ End
 
 	#tag Property, Flags = &h0
 		arStartTime() As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		arSwimTime() As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		arT2TOD As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
@@ -4511,6 +4612,10 @@ End
 
 	#tag Property, Flags = &h1
 		Protected IncomingDataSource As string
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		LastEliteStopTime As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
