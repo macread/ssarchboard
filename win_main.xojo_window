@@ -3089,6 +3089,39 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub EliteDisplay_LoadAthlete(idx As Integer, Time As String)
+		  'update the Elite Screen with times calculated here, just in case the athlete crossing the finish line passed the athlete being displayed on the screen
+		  EliteName = arFirstName(idx) + " " + arLastName(idx)
+		  EliteSwimTime = arSwimTime(idx)
+		  EliteBikeTime = arBikeTime(idx)
+		  
+		  RunTime = app.CalcTimeDifference(Time, arT2TOD(idx),pmTimeTrucation.ListIndex)
+		  RunTime = TruncateTime(RunTime)
+		  RunTime = app.StripTime(RunTime)
+		  
+		  EliteRunTime = RunTime
+		  
+		  TotalTime = app.CalcTimeDifference(Time, arStartTime(idx),pmTimeTrucation.ListIndex)
+		  TotalTime = TruncateTime(TotalTime)
+		  TotalTime = app.StripTime(TotalTime)
+		  
+		  LastEliteStopTime = StopTime
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub EliteStack_AddTime(idx As Integer, Time As String)
+		  Dim StackIdx as Integer
+		  
+		  StackIdx = arEliteStackAthlete.IndexOf(idx)
+		  If StackIdx >= 0 Then
+		    arEliteStackStopTime(StackIdx) = Time
+		  End If
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub EliteStack_Push(idx as Integer, StopTime as String)
 		  'Doing this in a method incase there turns out to be more than one item to the stack
 		  
@@ -3104,33 +3137,7 @@ End
 		  Dim StackIdx as Integer
 		  Dim RunTime, TotalTime as String
 		  
-		  'Remove from the stack
-		  StackIdx = arEliteStackAthlete.IndexOf(idx)
-		  If StackIdx >= 0 Then
-		    arEliteStackAthlete.Remove(idx)
-		    arEliteStackStopTime.Remove(idx)
-		    
-		    'stop the Elite Timer
-		    EliteTimer.Mode = Timer.ModeOff
-		    
-		    'update the Elite Screen with times calculated here, just in case the athlete crossing the finish line passed the athlete being displayed on the screen
-		    EliteName = arFirstName(idx) + " " + arLastName(idx)
-		    EliteSwimTime = arSwimTime(idx)
-		    EliteBikeTime = arBikeTime(idx)
-		    
-		    RunTime = app.CalcTimeDifference(Time, arT2TOD(idx),pmTimeTrucation.ListIndex)
-		    RunTime = TruncateTime(RunTime)
-		    RunTime = app.StripTime(RunTime)
-		    
-		    EliteRunTime = RunTime
-		    
-		    TotalTime = app.CalcTimeDifference(Time, arStartTime(idx),pmTimeTrucation.ListIndex)
-		    TotalTime = TruncateTime(TotalTime)
-		    TotalTime = app.StripTime(TotalTime)
-		    
-		    LastEliteStopTime = StopTime
-		    
-		  End If
+		  
 		  
 		End Sub
 	#tag EndMethod
@@ -4442,9 +4449,8 @@ End
 		      Else
 		        
 		        If cbDisplayElite.Value Then
-		          'Stop run clock
 		          
-		          'Stop total time clock
+		          EliteStack_AddTime(idx, Time)
 		          
 		        Else
 		          
@@ -4588,6 +4594,10 @@ End
 
 	#tag Property, Flags = &h0
 		DivisionID() As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		Elite_CurrentAthlete As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -5676,6 +5686,42 @@ End
 		    Return True
 		  End If
 		End Function
+	#tag EndEvent
+#tag EndEvents
+#tag Events EliteTimer
+	#tag Event
+		Sub Action()
+		  'The Elite stack is a FIFO stack
+		  
+		  'If there is an addition to the stack display the racer data for the athlete on the top of the stack
+		  'If a time of day is added do the following:
+		  '  - find the oldest TOD
+		  '  - stop the clocks
+		  '  - for that athlete completely refresh the screen with that athlete's information in case the leader was passed after the triggert line
+		  '  - start count down to clear for the next finisher
+		  '  - when the count down timer runs out do the following:
+		  '     - remove the row from the stack
+		  '     - rinse and repeat
+		  
+		  Dim CurrentTime As New Date
+		  Dim Time As String
+		  
+		  
+		  
+		  
+		  If arEliteStackAthlete.Ubound >= 0 Then 
+		    
+		    If arEliteStackStopTime(0) = "" Then
+		      Time = app.CalcTimeDifference(CurrentTime.SQLDateTime, arStartTime(arEliteStackAthlete(0)), pmTimeTrucation.ListIndex)
+		    Else
+		      Time = app.CalcTimeDifference(arEliteStackStopTime(0), arStartTime(arEliteStackAthlete(0)), pmTimeTrucation.ListIndex) ' "stops" the clock
+		    End If
+		    
+		    EliteDisplay_LoadAthlete(arEliteStackAthlete(0), Time)
+		    
+		    
+		  End If
+		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag ViewBehavior
