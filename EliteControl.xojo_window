@@ -265,7 +265,7 @@ Begin ContainerControl EliteControl
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   20
+      Top             =   24
       Transparent     =   False
       Underline       =   False
       Visible         =   True
@@ -315,6 +315,7 @@ End
 #tag Events lblEliteSwimTime
 	#tag Event
 		Sub Open()
+		  me.TextSize=16
 		  me.TextColor=win_main.Color_Font
 		  me.TextFont=win_main.Display_Font
 		End Sub
@@ -323,6 +324,7 @@ End
 #tag Events lblEliteBikeTime
 	#tag Event
 		Sub Open()
+		  me.TextSize=16
 		  me.TextColor=win_main.Color_Font
 		  me.TextFont=win_main.Display_Font
 		  
@@ -332,6 +334,7 @@ End
 #tag Events lblEliteRunTime
 	#tag Event
 		Sub Open()
+		  me.TextSize=16
 		  me.TextColor=win_main.Color_Font
 		  me.TextFont=win_main.Display_Font
 		End Sub
@@ -340,7 +343,6 @@ End
 #tag Events lblEliteBikeLabel
 	#tag Event
 		Sub Open()
-		  me.TextSize=8
 		  me.TextColor=win_main.Color_Font
 		  me.TextFont=win_main.Display_Font
 		End Sub
@@ -349,7 +351,7 @@ End
 #tag Events lblEliteSwimLabel
 	#tag Event
 		Sub Open()
-		  me.TextSize=8
+		  
 		  me.TextColor=win_main.Color_Font
 		  me.TextFont=win_main.Display_Font
 		End Sub
@@ -367,7 +369,7 @@ End
 #tag Events lblEliteRunningTime
 	#tag Event
 		Sub Open()
-		  me.TextSize=20
+		  me.TextSize=36
 		  me.TextColor=win_main.Color_Font
 		  me.TextFont=win_main.Display_Font
 		End Sub
@@ -376,7 +378,6 @@ End
 #tag Events lblEliteRunLabel
 	#tag Event
 		Sub Open()
-		  me.TextSize=8
 		  me.TextColor=win_main.Color_Font
 		  me.TextFont=win_main.Display_Font
 		End Sub

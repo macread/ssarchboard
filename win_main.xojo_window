@@ -26,6 +26,114 @@ Begin Window win_main
    Title           =   "Sportstats Arch Board"
    Visible         =   True
    Width           =   1020
+   Begin GroupBox GroupBox2
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   "Elite Format"
+      Enabled         =   True
+      Height          =   112
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   649
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   86
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   303
+      Transparent     =   False
+      Underline       =   False
+      Visible         =   True
+      Width           =   305
+      Begin TextField tfSeconds
+         AcceptTabs      =   False
+         Alignment       =   0
+         AutoDeactivate  =   True
+         AutomaticallyCheckSpelling=   False
+         BackColor       =   &cFFFFFF00
+         Bold            =   False
+         Border          =   True
+         CueText         =   ""
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Format          =   ""
+         Height          =   22
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "GroupBox2"
+         Italic          =   False
+         Left            =   765
+         LimitText       =   0
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   True
+         Mask            =   ""
+         Password        =   False
+         ReadOnly        =   False
+         Scope           =   0
+         TabIndex        =   0
+         TabPanelIndex   =   0
+         TabStop         =   True
+         Text            =   "5"
+         TextColor       =   &c00000000
+         TextFont        =   "System"
+         TextSize        =   0.0
+         TextUnit        =   0
+         Top             =   373
+         Transparent     =   False
+         Underline       =   False
+         UseFocusRing    =   True
+         Visible         =   True
+         Width           =   27
+      End
+      Begin Label Label25
+         AutoDeactivate  =   True
+         Bold            =   False
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   "Enter the number of seconds to delay refreshing the display when there is another elite athlete finishing."
+         Index           =   -2147483648
+         InitialParent   =   "GroupBox2"
+         Italic          =   False
+         Left            =   693
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   True
+         Multiline       =   False
+         Scope           =   0
+         Selectable      =   False
+         TabIndex        =   1
+         TabPanelIndex   =   0
+         TabStop         =   True
+         Text            =   "Delay Time"
+         TextAlign       =   0
+         TextColor       =   &c00000000
+         TextFont        =   "System"
+         TextSize        =   0.0
+         TextUnit        =   0
+         Top             =   374
+         Transparent     =   False
+         Underline       =   False
+         Visible         =   True
+         Width           =   74
+      End
+   End
    Begin Rectangle rectBackground
       AutoDeactivate  =   True
       BorderWidth     =   0
@@ -2863,7 +2971,7 @@ Begin Window win_main
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   322
+      Top             =   254
       Transparent     =   False
       Underline       =   False
       Value           =   True
@@ -2963,7 +3071,7 @@ Begin Window win_main
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   674
+      Left            =   671
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -2977,7 +3085,7 @@ Begin Window win_main
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   284
+      Top             =   336
       Transparent     =   False
       Underline       =   False
       Value           =   True
@@ -3118,21 +3226,24 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub EliteDisplay_LoadAthlete(idx As Integer)
+		Sub EliteDisplay_LoadAthlete(AthleteIdx As Integer, StackIdx As Integer)
 		  Dim RunTime, TotalTime As String
 		  Dim f As FolderItem
 		  Dim p As Picture
 		  Dim CurrentTime As New Date
 		  Dim Time As String
+		  Dim i As Integer
+		  Dim StopTimeExists As Boolean
 		  
+		  StopTimeExists = false
 		  
 		  'update the Elite Screen with times calculated here, just in case the athlete crossing the finish line passed the athlete being displayed on the screen
-		  EliteControl1.lblEliteName.Text = arFirstName(idx) + " " + arLastName(idx)
-		  EliteControl1.lblEliteSwimTime.Text = arSwimTime(idx)
-		  EliteControl1.lblEliteBikeTime.Text = arBikeTime(idx)
+		  EliteControl1.lblEliteName.Text = arFirstName(AthleteIdx) + " " + arLastName(AthleteIdx)
+		  EliteControl1.lblEliteSwimTime.Text = arSwimTime(AthleteIdx)
+		  EliteControl1.lblEliteBikeTime.Text = arBikeTime(AthleteIdx)
 		  
 		  If lblHeadShotPath.Text <>"" Then
-		    f = GetFolderItem(HeadShotPath+arBib(idx)+".jpg")
+		    f = GetFolderItem(HeadShotPath+arBib(AthleteIdx)+".jpg")
 		    If f.Exists Then
 		      'nop
 		    Else
@@ -3144,21 +3255,40 @@ End
 		    canLogoRight.Backdrop=p
 		  End If
 		  
-		  If arEliteStackStopTime(0) = "" Then
-		    Time = self.RaceDateInput.Text+" "+Str(CurrentTime.Hour)+":"+Str(CurrentTime.Minute)+":"+Str(CurrentTime.Second)
+		  If arEliteStackStopTime(StackIdx) = "" Then
+		    Time = self.RaceDateInput.Text+" "+CurrentTime.SQLDateTime.Right(8)
 		  Else
-		    Time = arEliteStackStopTime(0)
+		    Time = arEliteStackStopTime(StackIdx)
 		  End If
 		  
-		  RunTime = app.CalcTimeDifference(Time, arT2TOD(idx),pmTimeTrucation.ListIndex)
+		  RunTime = app.CalcTimeDifference(Time, arT2TOD(AthleteIdx),pmTimeTrucation.ListIndex)
 		  RunTime = TruncateTime(RunTime)
 		  EliteControl1.lblEliteRunTime.Text = app.StripTime(RunTime)
 		  
-		  TotalTime = app.CalcTimeDifference(Time, arStartTime(idx),pmTimeTrucation.ListIndex)
+		  TotalTime = app.CalcTimeDifference(Time, arStartTime(AthleteIdx),pmTimeTrucation.ListIndex)
 		  TotalTime = TruncateTime(TotalTime)
 		  EliteControl1.lblEliteRunningTime.Text = app.StripTime(TotalTime)
 		  
-		  LastEliteStopTime = arEliteStackStopTime(0)
+		  if ExternalWindowRunning Then
+		    win_external.EliteControl1.lblEliteName.Text = EliteControl1.lblEliteName.Text 
+		    win_external.EliteControl1.lblEliteSwimTime.Text = EliteControl1.lblEliteSwimTime.Text 
+		    win_external.EliteControl1.lblEliteBikeTime.Text = EliteControl1.lblEliteBikeTime.Text 
+		    win_external.EliteControl1.lblEliteRunTime.Text = EliteControl1.lblEliteRunTime.Text 
+		    win_external.EliteControl1.lblEliteRunningTime.Text = EliteControl1.lblEliteRunningTime.Text 
+		    win_external.canLogoRight.Backdrop=canLogoRight.Backdrop
+		  End If
+		  
+		  For i = 0 to arEliteStackStopTime.Ubound
+		    If arEliteStackStopTime(i) <> "" Then
+		      StopTimeExists = True
+		    End If
+		  Next
+		  
+		  If StopTimeExists Then
+		    If (CurrentTime.TotalSeconds > (LastPassingTime+val(tfSeconds.Text)) and LastPassingTime>0 and arEliteStackAthlete.Ubound>0) Then
+		      EliteStack_Remove
+		    End If
+		  End If
 		  
 		End Sub
 	#tag EndMethod
@@ -3166,16 +3296,20 @@ End
 	#tag Method, Flags = &h0
 		Sub EliteStack_AddTime(idx As Integer, Time As String)
 		  Dim StackIdx as Integer
+		  Dim CurrentTime as New Date
 		  
 		  StackIdx = arEliteStackAthlete.IndexOf(idx)
 		  If StackIdx >= 0 Then
 		    arEliteStackStopTime(StackIdx) = Time
+		    LastPassingTime = Currenttime.TotalSeconds
 		  End If
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub EliteStack_Push(idx as Integer)
+		  Dim CurrentTime As Date
+		  
 		  'Doing this in a method incase there turns out to be more than one item to the stack
 		  
 		  arEliteStackAthlete.Append idx
@@ -3184,11 +3318,11 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub EliteStack_Remove(idx As Integer, StopTime As String)
-		  'Removes the runner from the stack,  stops the Elite Timer, updates the Elite Screen
-		  
-		  Dim StackIdx as Integer
-		  Dim RunTime, TotalTime as String
+		Sub EliteStack_Remove()
+		  If arEliteStackAthlete.Ubound>=0 Then
+		    arEliteStackAthlete.Remove(0)
+		    arEliteStackStopTime.Remove(0)
+		  End If
 		  
 		  
 		  
@@ -3615,9 +3749,9 @@ End
 		  If Direction="In" Then
 		    EliteControl1.Top=ListReturnLocation
 		  Else
-		    if (lbList.Top<>1000) then
+		    if (EliteControl1.Top<>1000) then
 		      ListReturnLocation=EliteControl1.Top
-		      lbList.Top=1000
+		      EliteControl1.Top=1000
 		    end if
 		  End If
 		  
@@ -3630,14 +3764,9 @@ End
 	#tag Method, Flags = &h0
 		Sub MoveEliteDataExternal(Direction As String)
 		  If Direction="In" Then
-		    'win_external.lbList.Top=ListReturnLocationExternal
-		    win_external.lbList.Top=0
+		    win_external.EliteControl1.Top=0
 		  Else
-		    'if (win_external.lbList.Top<>1000) then
-		    'ListReturnLocationExternal=win_external.lbList.Top
-		    'win_external.lbList.Top=1000
-		    'end if
-		    win_external.lbList.Top=1000
+		    win_external.EliteControl1.Top=1000
 		  End If
 		  
 		End Sub
@@ -3817,6 +3946,7 @@ End
 		    
 		    
 		    win_external.lbList.Left=24
+		    win_external.EliteControl1.Left=24
 		    
 		    win_external.mpLeft.Width=84
 		    
@@ -3830,9 +3960,11 @@ End
 		    bbMediaRight.Enabled=True
 		    
 		    If pmDisplaySize.ListIndex =0 Then
-		      win_external.lbList.Left=24
+		      win_external.lbList.Left=24  
+		      win_external.EliteControl1.Left=24
 		    Else
-		      win_external.lbList.Left=110
+		      win_external.lbList.Left=110  
+		      win_external.EliteControl1.Left=110
 		    End If
 		    
 		    win_external.mpLeft.Width=84
@@ -3849,7 +3981,8 @@ End
 		    bbMediaLeft.Enabled=True
 		    bbMediaRight.Enabled=False
 		    
-		    win_external.lbList.Left=218
+		    win_external.lbList.Left=218  
+		    win_external.EliteControl1.Left=218
 		    
 		    win_external.mpLeft.Top=10
 		    win_external.mpLeft.Width=168
@@ -4539,45 +4672,42 @@ End
 		        'push on elite display stack
 		        EliteStack_Push(idx)
 		        
-		      Else
+		      ElseIf GetPassingType(Source) = "Finish Time" and cbDisplayElite.Value Then 
 		        
-		        If cbDisplayElite.Value Then
+		        EliteStack_AddTime(idx, Time)
+		        
+		      ElseIf GetPassingType(Source) = "Finish Time" Then
+		        
+		        // calculate total time
+		        TotalTime=app.CalcTimeDifference(Time, arStartTime(idx),pmTimeTrucation.ListIndex)
+		        
+		        TotalTime=TruncateTime(TotalTime)
+		        
+		        TotalTime=app.StripTime(TotalTime)
+		        
+		        
+		        // build racer name
+		        If pmDisplaySize.ListIndex = 0 Then
 		          
-		          EliteStack_AddTime(idx, Time)
-		          
-		        Else
-		          
-		          // calculate total time
-		          TotalTime=app.CalcTimeDifference(Time, arStartTime(idx),pmTimeTrucation.ListIndex)
-		          
-		          TotalTime=TruncateTime(TotalTime)
-		          
-		          TotalTime=app.StripTime(TotalTime)
-		          
-		          
-		          // build racer name
-		          If pmDisplaySize.ListIndex = 0 Then
-		            
-		            If Len(arLastName(idx))>=9 Then
-		              RacerName=Left(arLastName(idx),11)
-		            Else
-		              RacerName=arFirstName(idx).Left(1)+". "+arLastName(idx)
-		            End If
+		          If Len(arLastName(idx))>=9 Then
+		            RacerName=Left(arLastName(idx),11)
 		          Else
-		            RacerName=arFirstName(idx)+" "+arLastName(idx)
-		            If Len(RacerName)>21 Then
-		              RacerName=Left(RacerName,21)+"..."
-		            End If
+		            RacerName=arFirstName(idx).Left(1)+". "+arLastName(idx)
 		          End If
-		          
-		          // post on screen
-		          PostToScreen(arBib(idx), RacerName, arCountry(idx), TotalTime)
-		          
-		          arDisplayed(idx)=True
+		        Else
+		          RacerName=arFirstName(idx)+" "+arLastName(idx)
+		          If Len(RacerName)>21 Then
+		            RacerName=Left(RacerName,21)+"..."
+		          End If
 		        End If
 		        
-		      End if
-		    End If
+		        // post on screen
+		        PostToScreen(arBib(idx), RacerName, arCountry(idx), TotalTime)
+		        
+		        arDisplayed(idx)=True
+		      End If
+		      
+		    End if
 		  End If
 		End Sub
 	#tag EndMethod
@@ -4715,10 +4845,6 @@ End
 
 	#tag Property, Flags = &h1
 		Protected IncomingDataSource As string
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		LastEliteStopTime As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -5315,9 +5441,10 @@ End
 		  dim f as FolderItem
 		  dim p as picture
 		  
-		  If (CurrentTime.TotalSeconds > (LastPassingTime+val(win_main.pmRunningClockShow.Text)) and LastPassingTime>0) Then
+		  If (CurrentTime.TotalSeconds > (LastPassingTime+val(win_main.pmRunningClockShow.Text)) and LastPassingTime>0)Then
 		    
 		    MoveClock("In")
+		    EliteStack_Remove
 		    
 		    If LogoPathRight<>"" Then
 		      f = GetFolderItem(LogoPathRight)
@@ -5334,11 +5461,14 @@ End
 		        p=f.OpenAsVectorPicture
 		        canLogoRight.Backdrop=p
 		        canLogoRight.Visible=True
+		        If ExternalWindowRunning Then
+		          win_external.canLogoRight.Backdrop = canLogoRight.Backdrop
+		        End If
 		      End If
 		      
 		    End If
 		    
-		  End if
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -5692,8 +5822,6 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events lblBannerPath
-#tag EndEvents
 #tag Events cbBanner
 	#tag Event
 		Sub Action()
@@ -5790,6 +5918,10 @@ End
 		    EliteTimer.Enabled=True
 		  Else
 		    EliteTimer.Enabled=False
+		    MoveEliteData("Out")
+		    MoveClock("In")
+		    Redim arEliteStackAthlete(-1)
+		    Redim arEliteStackStopTime(-1)
 		  End If
 		End Sub
 	#tag EndEvent
@@ -5802,14 +5934,31 @@ End
 #tag Events EliteTimer
 	#tag Event
 		Sub Action()
+		  Dim i, Idx As Integer
+		  
+		  idx = 0
+		  
 		  'The Elite stack is a FIFO stack
 		  
 		  If arEliteStackAthlete.Ubound >= 0 Then 
 		    
-		    EliteDisplay_LoadAthlete(arEliteStackAthlete(0))
+		    For  i = 0 to arEliteStackStopTime.Ubound
+		      If arEliteStackStopTime(i) <> "" Then
+		        If arEliteStackStopTime(i) < arEliteStackStopTime(idx) Then
+		          idx = i
+		        End If
+		      End If
+		    Next
+		    
+		    EliteDisplay_LoadAthlete(arEliteStackAthlete(idx), idx)
 		    
 		    MoveClock("Out")
 		    MoveEliteData("In")
+		    
+		  Else
+		    
+		    MoveClock("In")
+		    MoveEliteData("Out")
 		    
 		  End If
 		End Sub
@@ -6146,18 +6295,8 @@ End
 		Type="Boolean"
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="arT2TOD()"
-		Group="Behavior"
-		Type="String"
-	#tag EndViewProperty
-	#tag ViewProperty
 		Name="Elite_CurrentAthlete"
 		Group="Behavior"
 		Type="Integer"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="LastEliteStopTime"
-		Group="Behavior"
-		Type="String"
 	#tag EndViewProperty
 #tag EndViewBehavior

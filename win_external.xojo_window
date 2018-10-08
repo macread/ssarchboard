@@ -231,6 +231,35 @@ Begin Window win_external
       Visible         =   True
       Width           =   84
    End
+   Begin EliteControl EliteControl1
+      AcceptFocus     =   False
+      AcceptTabs      =   True
+      AutoDeactivate  =   True
+      BackColor       =   &c00000000
+      Backdrop        =   0
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      HasBackColor    =   False
+      Height          =   84
+      HelpTag         =   ""
+      InitialParent   =   ""
+      Left            =   532
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   6
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   1020
+      Transparent     =   True
+      UseFocusRing    =   False
+      Visible         =   True
+      Width           =   334
+   End
 End
 #tag EndWindow
 
