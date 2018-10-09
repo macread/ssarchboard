@@ -2981,7 +2981,7 @@ Begin Window win_main
    Begin GroupBox GroupBox1
       AutoDeactivate  =   True
       Bold            =   False
-      Caption         =   "Timing & Scoring® Map"
+      Caption         =   "Timing and Scoring® Map"
       Enabled         =   True
       Height          =   115
       HelpTag         =   ""
@@ -3251,9 +3251,20 @@ End
 		    End If
 		    MoveVideo("Right","Out")
 		    MoveLogo("Right","In")
-		    p=f.OpenAsVectorPicture
+		    p=ScalePicture(f.OpenAsVectorPicture, 84, 84)
 		    canLogoRight.Backdrop=p
 		  End If
+		  
+		  f = GetFolderItem("").Child("flags").Child(Lowercase(arCountry(AthleteIdx))+".png")
+		  If f.Exists Then
+		    p=ScalePicture(f.OpenAsVectorPicture, 30, 30)
+		    EliteControl1.canFlagLeft.Backdrop=p
+		    EliteControl1.canFlagRight.Backdrop=p
+		  Else
+		    EliteControl1.canFlagLeft.Backdrop=Nil
+		    EliteControl1.canFlagRight.Backdrop=Nil
+		  End If
+		  
 		  
 		  If arEliteStackStopTime(StackIdx) = "" Then
 		    Time = self.RaceDateInput.Text+" "+CurrentTime.SQLDateTime.Right(8)
@@ -3275,6 +3286,8 @@ End
 		    win_external.EliteControl1.lblEliteBikeTime.Text = EliteControl1.lblEliteBikeTime.Text 
 		    win_external.EliteControl1.lblEliteRunTime.Text = EliteControl1.lblEliteRunTime.Text 
 		    win_external.EliteControl1.lblEliteRunningTime.Text = EliteControl1.lblEliteRunningTime.Text 
+		    win_external.EliteControl1.canFlagLeft.Backdrop = EliteControl1.canFlagLeft.Backdrop
+		    win_external.EliteControl1.canFlagRight.Backdrop = EliteControl1.canFlagRight.Backdrop
 		    win_external.canLogoRight.Backdrop=canLogoRight.Backdrop
 		  End If
 		  
@@ -4407,6 +4420,29 @@ End
 		    end if
 		  Loop Until ((IncomingData="") or (CRLFPos=0))
 		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function ScalePicture(PictureToScale as picture, Availablewidth as integer, Availableheight as integer) As picture
+		  // Now Scale the image
+		  dim d as double
+		  dim w,h,neww,newh as integer
+		  dim p2 as Picture
+		  
+		  //check that there really is a picture first
+		  if PictureToScale.graphics<>nil then
+		    w=PictureToScale.width
+		    h=PictureToScale.height
+		    d=min(Availablewidth/w,Availableheight/h) // Calculate the factor with which to scale
+		    neww=w*d // the new width of the picture
+		    newh=h*d // the new height of the picture
+		    
+		    
+		    p2= new Picture(Availablewidth,Availableheight, PictureToScale.Depth)
+		    p2.Graphics.DrawPicture PictureToScale, (Availablewidth-neww)/2, (Availableheight-newh)/2,neww,newh,0,0,w,h
+		    return p2
+		  end if
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0

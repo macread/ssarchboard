@@ -212,7 +212,7 @@ Begin ContainerControl EliteControl
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   0
+      Left            =   30
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -234,7 +234,7 @@ Begin ContainerControl EliteControl
       Transparent     =   False
       Underline       =   False
       Visible         =   True
-      Width           =   334
+      Width           =   274
    End
    Begin Label lblEliteRunningTime
       AutoDeactivate  =   True
@@ -305,6 +305,62 @@ Begin ContainerControl EliteControl
       Underline       =   False
       Visible         =   True
       Width           =   65
+   End
+   Begin Canvas canFlagLeft
+      AcceptFocus     =   False
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   30
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   8
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   0
+      Transparent     =   True
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   30
+   End
+   Begin Canvas canFlagRight
+      AcceptFocus     =   False
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   30
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   304
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   9
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   0
+      Transparent     =   True
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   30
    End
 End
 #tag EndWindow
