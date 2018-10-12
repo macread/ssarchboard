@@ -833,7 +833,7 @@ Begin Window win_main
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   109
+      Left            =   25
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -853,7 +853,7 @@ Begin Window win_main
       Underline       =   False
       Value           =   False
       Visible         =   True
-      Width           =   241
+      Width           =   175
    End
    Begin Label lblFontLowSize
       AutoDeactivate  =   True
@@ -2671,7 +2671,7 @@ Begin Window win_main
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   640
+      Left            =   779
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -2686,12 +2686,12 @@ Begin Window win_main
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   211
+      Top             =   212
       Transparent     =   False
       Underline       =   False
       Value           =   False
       Visible         =   True
-      Width           =   241
+      Width           =   175
    End
    Begin TCPSocket RunScoreSocket
       Address         =   ""
@@ -2782,7 +2782,7 @@ Begin Window win_main
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   377
+      Left            =   528
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -2802,7 +2802,7 @@ Begin Window win_main
       Underline       =   False
       Value           =   False
       Visible         =   True
-      Width           =   241
+      Width           =   175
    End
    Begin BevelButton bbBanner
       AcceptFocus     =   False
@@ -3128,6 +3128,51 @@ Begin Window win_main
       UseFocusRing    =   False
       Visible         =   True
       Width           =   334
+   End
+   Begin BevelButton bbTestDataElite
+      AcceptFocus     =   True
+      AutoDeactivate  =   True
+      BackColor       =   &c00000000
+      Bevel           =   0
+      Bold            =   False
+      ButtonType      =   0
+      Caption         =   "Load Elite Test Data"
+      CaptionAlign    =   3
+      CaptionDelta    =   0
+      CaptionPlacement=   1
+      Enabled         =   True
+      HasBackColor    =   False
+      HasMenu         =   0
+      Height          =   31
+      HelpTag         =   ""
+      Icon            =   0
+      IconAlign       =   0
+      IconDX          =   0
+      IconDY          =   0
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   277
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MenuValue       =   0
+      Scope           =   0
+      TabIndex        =   87
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   211
+      Transparent     =   False
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   175
    End
 End
 #tag EndWindow
@@ -4567,6 +4612,15 @@ End
 		  
 		  lbList.Refresh
 		  
+		  EliteControl1.lblEliteBikeLabel.TextColor=Color_Font
+		  EliteControl1.lblEliteBikeTime.TextColor=Color_Font
+		  EliteControl1.lblEliteName.TextColor=Color_Font
+		  EliteControl1.lblEliteRunLabel.TextColor=Color_Font
+		  EliteControl1.lblEliteRunTime.TextColor=Color_Font
+		  EliteControl1.lblEliteRunningTime.TextColor=Color_Font
+		  EliteControl1.lblEliteSwimLabel.TextColor=Color_Font
+		  EliteControl1.lblEliteSwimTime.TextColor=Color_Font
+		  
 		  me.Refresh
 		  
 		  if ExternalWindowRunning Then
@@ -4658,6 +4712,15 @@ End
 		  
 		  win_external.lblRunningClock.TextColor=Color_Font
 		  win_external.lblRunningClock.TextFont=Display_Font
+		  
+		  win_external.EliteControl1.lblEliteBikeLabel.TextColor=Color_Font
+		  win_external.EliteControl1.lblEliteBikeTime.TextColor=Color_Font
+		  win_external.EliteControl1.lblEliteName.TextColor=Color_Font
+		  win_external.EliteControl1.lblEliteRunLabel.TextColor=Color_Font
+		  win_external.EliteControl1.lblEliteRunTime.TextColor=Color_Font
+		  win_external.EliteControl1.lblEliteRunningTime.TextColor=Color_Font
+		  win_external.EliteControl1.lblEliteSwimLabel.TextColor=Color_Font
+		  win_external.EliteControl1.lblEliteSwimTime.TextColor=Color_Font
 		  
 		  win_external.lbList.Refresh
 		  
@@ -6008,6 +6071,72 @@ End
 		    MoveEliteData("Out")
 		    
 		  End If
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events bbTestDataElite
+	#tag Event
+		Sub Action()
+		  Dim RunTime, TotalTime As String
+		  Dim f As FolderItem
+		  Dim p, p2 As Picture
+		  Dim CurrentTime As New Date
+		  Dim Time As String
+		  Dim i As Integer
+		  Dim StopTimeExists As Boolean
+		  
+		  if bbTestDataElite.Caption="Load Elite Test Data" then
+		    
+		    MoveClock("Out")
+		    SetStyle
+		    
+		    EliteTimer.Enabled=False
+		    
+		    'update the Elite Screen with times calculated here, just in case the athlete crossing the finish line passed the athlete being displayed on the screen
+		    EliteControl1.lblEliteName.Text = "Elite RACER"
+		    EliteControl1.lblEliteSwimTime.Text = "0:55:55"
+		    EliteControl1.lblEliteBikeTime.Text = "4:00:00"
+		    EliteControl1.lblEliteRunTime.Text = "2:00:00"
+		    
+		    
+		    f = GetFolderItem("").Child("flags").Child(Lowercase("can")+".png")
+		    If f.Exists Then
+		      p=ScalePicture(f.OpenAsVectorPicture, 30, 30)  
+		      p2 = new picture(30, 25, p.Depth) 
+		      p2.Graphics.DrawPicture(p, 0, -5, 30, 25, 0, 0)
+		      EliteControl1.canFlagLeft.Backdrop=p2
+		      EliteControl1.canFlagRight.Backdrop=p2
+		    Else
+		      EliteControl1.canFlagLeft.Backdrop=Nil
+		      EliteControl1.canFlagRight.Backdrop=Nil
+		    End If
+		    
+		    EliteControl1.lblEliteRunningTime.Text = "10:00:00"
+		    
+		    if ExternalWindowRunning Then
+		      win_external.EliteControl1.lblEliteName.Text = EliteControl1.lblEliteName.Text 
+		      win_external.EliteControl1.lblEliteSwimTime.Text = EliteControl1.lblEliteSwimTime.Text 
+		      win_external.EliteControl1.lblEliteBikeTime.Text = EliteControl1.lblEliteBikeTime.Text 
+		      win_external.EliteControl1.lblEliteRunTime.Text = EliteControl1.lblEliteRunTime.Text 
+		      win_external.EliteControl1.lblEliteRunningTime.Text = EliteControl1.lblEliteRunningTime.Text 
+		      win_external.EliteControl1.canFlagLeft.Backdrop = EliteControl1.canFlagLeft.Backdrop
+		      win_external.EliteControl1.canFlagRight.Backdrop = EliteControl1.canFlagRight.Backdrop
+		      win_external.canLogoRight.Backdrop=canLogoRight.Backdrop
+		    End If
+		    
+		    bbTestDataElite.Caption="Clear Elite Test Data"
+		    
+		    MoveEliteData("In")
+		    
+		  Else
+		    EliteTimer.Enabled=True
+		    MoveEliteData("Out")
+		    bbTestDataElite.Caption="Load Elite Test Data"
+		    MoveClock("In")
+		    
+		  end if
+		  
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
