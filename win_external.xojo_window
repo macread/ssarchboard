@@ -260,6 +260,34 @@ Begin Window win_external
       Visible         =   True
       Width           =   334
    End
+   Begin Canvas canBanner
+      AcceptFocus     =   False
+      AcceptTabs      =   False
+      AutoDeactivate  =   True
+      Backdrop        =   0
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   84
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   20
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   7
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   1000
+      Transparent     =   True
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   504
+   End
 End
 #tag EndWindow
 

@@ -3229,7 +3229,7 @@ End
 		Sub EliteDisplay_LoadAthlete(AthleteIdx As Integer, StackIdx As Integer)
 		  Dim RunTime, TotalTime As String
 		  Dim f As FolderItem
-		  Dim p As Picture
+		  Dim p, p2 As Picture
 		  Dim CurrentTime As New Date
 		  Dim Time As String
 		  Dim i As Integer
@@ -3251,15 +3251,17 @@ End
 		    End If
 		    MoveVideo("Right","Out")
 		    MoveLogo("Right","In")
-		    p=ScalePicture(f.OpenAsVectorPicture, 84, 84)
+		    p=ScalePicture(f.OpenAsVectorPicture, 100, 100)  
 		    canLogoRight.Backdrop=p
 		  End If
 		  
 		  f = GetFolderItem("").Child("flags").Child(Lowercase(arCountry(AthleteIdx))+".png")
 		  If f.Exists Then
-		    p=ScalePicture(f.OpenAsVectorPicture, 30, 30)
-		    EliteControl1.canFlagLeft.Backdrop=p
-		    EliteControl1.canFlagRight.Backdrop=p
+		    p=ScalePicture(f.OpenAsVectorPicture, 30, 30)  
+		    p2 = new picture(30, 25, p.Depth) 
+		    p2.Graphics.DrawPicture(p, 0, -5, 30, 25, 0, 0)
+		    EliteControl1.canFlagLeft.Backdrop=p2
+		    EliteControl1.canFlagRight.Backdrop=p2
 		  Else
 		    EliteControl1.canFlagLeft.Backdrop=Nil
 		    EliteControl1.canFlagRight.Backdrop=Nil
@@ -5866,6 +5868,15 @@ End
 		  Else
 		    canBanner.Top=1000
 		  End If
+		  
+		  if ExternalWindowRunning Then
+		    If me.Value Then
+		      win_external.canBanner.Backdrop=canBanner.Backdrop
+		      win_external.canBanner.Top=35
+		    Else
+		      win_external.canBanner.Top=1000
+		    End If
+		  End if
 		End Sub
 	#tag EndEvent
 #tag EndEvents

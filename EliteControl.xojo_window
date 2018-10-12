@@ -314,11 +314,11 @@ Begin ContainerControl EliteControl
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
-      Height          =   30
+      Height          =   20
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   0
+      Left            =   2
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -328,7 +328,7 @@ Begin ContainerControl EliteControl
       TabIndex        =   8
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   0
+      Top             =   5
       Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
@@ -342,11 +342,11 @@ Begin ContainerControl EliteControl
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
-      Height          =   30
+      Height          =   20
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   304
+      Left            =   302
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -356,7 +356,7 @@ Begin ContainerControl EliteControl
       TabIndex        =   9
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   0
+      Top             =   5
       Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
