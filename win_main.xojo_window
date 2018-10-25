@@ -31,7 +31,7 @@ Begin Window win_main
       Bold            =   False
       Caption         =   "Elite Format"
       Enabled         =   True
-      Height          =   112
+      Height          =   130
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
@@ -49,11 +49,111 @@ Begin Window win_main
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   303
+      Top             =   284
       Transparent     =   False
       Underline       =   False
       Visible         =   True
       Width           =   305
+      Begin Label Label25
+         AutoDeactivate  =   True
+         Bold            =   False
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   "Enter the number of seconds to delay refreshing the display when there is another elite athlete finishing."
+         Index           =   -2147483648
+         InitialParent   =   "GroupBox2"
+         Italic          =   False
+         Left            =   719
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   True
+         Multiline       =   False
+         Scope           =   0
+         Selectable      =   False
+         TabIndex        =   1
+         TabPanelIndex   =   0
+         TabStop         =   True
+         Text            =   "Delay Time:"
+         TextAlign       =   1
+         TextColor       =   &c00000000
+         TextFont        =   "System"
+         TextSize        =   0.0
+         TextUnit        =   0
+         Top             =   378
+         Transparent     =   False
+         Underline       =   False
+         Visible         =   True
+         Width           =   75
+      End
+      Begin PopupMenu pmGender
+         AutoDeactivate  =   True
+         Bold            =   False
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   "Select Gender to display"
+         Index           =   -2147483648
+         InitialParent   =   "GroupBox2"
+         InitialValue    =   "Both\nMen Only\nWomen Only"
+         Italic          =   False
+         Left            =   795
+         ListIndex       =   0
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   True
+         Scope           =   0
+         TabIndex        =   2
+         TabPanelIndex   =   0
+         TabStop         =   True
+         TextFont        =   "System"
+         TextSize        =   0.0
+         TextUnit        =   0
+         Top             =   342
+         Transparent     =   False
+         Underline       =   False
+         Visible         =   True
+         Width           =   120
+      End
+      Begin CheckBox cbDisplayElite
+         AutoDeactivate  =   True
+         Bold            =   False
+         Caption         =   "Display Elite Format"
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   "Check to display Elite Format for racers."
+         Index           =   -2147483648
+         InitialParent   =   "GroupBox2"
+         Italic          =   False
+         Left            =   680
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   True
+         Scope           =   0
+         State           =   1
+         TabIndex        =   3
+         TabPanelIndex   =   0
+         TabStop         =   True
+         TextFont        =   "System"
+         TextSize        =   0.0
+         TextUnit        =   0
+         Top             =   308
+         Transparent     =   False
+         Underline       =   False
+         Value           =   True
+         Visible         =   True
+         Width           =   163
+      End
       Begin TextField tfSeconds
          AcceptTabs      =   False
          Alignment       =   0
@@ -72,7 +172,7 @@ Begin Window win_main
          Index           =   -2147483648
          InitialParent   =   "GroupBox2"
          Italic          =   False
-         Left            =   765
+         Left            =   795
          LimitText       =   0
          LockBottom      =   False
          LockedInPosition=   False
@@ -83,7 +183,7 @@ Begin Window win_main
          Password        =   False
          ReadOnly        =   False
          Scope           =   0
-         TabIndex        =   0
+         TabIndex        =   4
          TabPanelIndex   =   0
          TabStop         =   True
          Text            =   "5"
@@ -91,14 +191,14 @@ Begin Window win_main
          TextFont        =   "System"
          TextSize        =   0.0
          TextUnit        =   0
-         Top             =   373
+         Top             =   377
          Transparent     =   False
          Underline       =   False
          UseFocusRing    =   True
          Visible         =   True
          Width           =   27
       End
-      Begin Label Label25
+      Begin Label Label26
          AutoDeactivate  =   True
          Bold            =   False
          DataField       =   ""
@@ -109,7 +209,7 @@ Begin Window win_main
          Index           =   -2147483648
          InitialParent   =   "GroupBox2"
          Italic          =   False
-         Left            =   693
+         Left            =   694
          LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
@@ -118,20 +218,20 @@ Begin Window win_main
          Multiline       =   False
          Scope           =   0
          Selectable      =   False
-         TabIndex        =   1
+         TabIndex        =   5
          TabPanelIndex   =   0
          TabStop         =   True
-         Text            =   "Delay Time"
-         TextAlign       =   0
+         Text            =   "Display Gender:"
+         TextAlign       =   1
          TextColor       =   &c00000000
          TextFont        =   "System"
          TextSize        =   0.0
          TextUnit        =   0
-         Top             =   374
+         Top             =   341
          Transparent     =   False
          Underline       =   False
          Visible         =   True
-         Width           =   74
+         Width           =   100
       End
    End
    Begin Rectangle rectBackground
@@ -711,7 +811,7 @@ Begin Window win_main
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
-      Height          =   20
+      Height          =   19
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
@@ -734,7 +834,7 @@ Begin Window win_main
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   408
+      Top             =   409
       Transparent     =   False
       Underline       =   False
       Visible         =   True
@@ -3059,39 +3159,6 @@ Begin Window win_main
          _ScrollWidth    =   -1
       End
    End
-   Begin CheckBox cbDisplayElite
-      AutoDeactivate  =   True
-      Bold            =   False
-      Caption         =   "Display Elite Format"
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   "Check to display Elite Format for racers."
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   671
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      State           =   1
-      TabIndex        =   84
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   336
-      Transparent     =   False
-      Underline       =   False
-      Value           =   True
-      Visible         =   True
-      Width           =   163
-   End
    Begin Timer EliteTimer
       Index           =   -2147483648
       LockedInPosition=   False
@@ -3480,7 +3547,7 @@ End
 		  Dim IncomingData, SQLStatement, Seperator as String
 		  Dim TXCode, Number, Name, Category, Extra1, Extra2 as String
 		  Dim i, LineNumber, Duplicates, Added, Ignored as Integer
-		  Dim FirstNameIdx, LastNameIdx, TXCodeIdx, NumberIdx, CountryIdx, StartTimeIdx, Extra2Idx, SwimTimeIdx, BikeTimeIdx, T2TODIdx as Integer
+		  Dim FirstNameIdx, LastNameIdx, TXCodeIdx, NumberIdx, CountryIdx, StartTimeIdx, Extra2Idx, SwimTimeIdx, BikeTimeIdx, T2TODIdx, GenderIdx as Integer
 		  Dim Today as new date
 		  
 		  Dim dlg As New OpenDialog
@@ -3528,6 +3595,7 @@ End
 		    Redim arSwimTime(0)
 		    Redim arBikeTime(0)
 		    Redim arT2TOD(0)
+		    Redim arGender(0)
 		    
 		    lblParticipantDataName.Text=f.Name
 		    ImportStream=f.OpenAsTextFile
@@ -3558,9 +3626,10 @@ End
 		      SwimTimeIdx=HeaderList.IndexOf("SWIM_TIME")
 		      BikeTimeIdx=HeaderList.IndexOf("BIKE_TIME")
 		      T2TODIdx=HeaderList.IndexOf("T2_TOD")
+		      GenderIdx=HeaderList.IndexOf("S")
 		      
 		      
-		      If (TXCodeIdx>=0 and NumberIdx>=0 and FirstNameIdx>=0 and LastNameIdx>=0 and CountryIdx>=0 and StartTimeIdx>=0 and SwimTimeIdx>=0 and BikeTimeIdx>=0 and T2TODIdx>=0) then
+		      If (TXCodeIdx>=0 and NumberIdx>=0 and FirstNameIdx>=0 and LastNameIdx>=0 and CountryIdx>=0 and StartTimeIdx>=0 and SwimTimeIdx>=0 and BikeTimeIdx>=0 and T2TODIdx>=0 and GenderIdx>=0) then
 		        
 		        'Loop through the file and import the data
 		        'read the data
@@ -3593,7 +3662,7 @@ End
 		              Else
 		                arT2TOD.Append RaceDateInput.Text+" "+FieldList(T2TODIdx)
 		              End If
-		              
+		              arGender.Append FieldList(GenderIdx)
 		              arDisplayed.Append False 
 		              
 		              Added=Added+1
@@ -4771,7 +4840,13 @@ End
 		      If GetPassingType(Source) = "Elite Trigger" and cbDisplayElite.Value Then 
 		        
 		        'push on elite display stack
-		        EliteStack_Push(idx)
+		        If pmGender.Text = "Men Only"  And arGender = "M" Then
+		          EliteStack_Push(idx)
+		        ElseIf  pmGender.Text = "Women Only" And arGender = "F" Then
+		          EliteStack_Push(idx)
+		        Else pmGender.Text = "Both" Then
+		          EliteStack_Push(idx)
+		        End 
 		        
 		      ElseIf GetPassingType(Source) = "Finish Time" and cbDisplayElite.Value Then 
 		        
@@ -4858,6 +4933,10 @@ End
 
 	#tag Property, Flags = &h0
 		arFirstName() As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		arGender() As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -5023,6 +5102,26 @@ End
 
 #tag EndWindowCode
 
+#tag Events cbDisplayElite
+	#tag Event
+		Sub Action()
+		  If me.Value Then
+		    EliteTimer.Enabled=True
+		  Else
+		    EliteTimer.Enabled=False
+		    MoveEliteData("Out")
+		    MoveClock("In")
+		    Redim arEliteStackAthlete(-1)
+		    Redim arEliteStackStopTime(-1)
+		  End If
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  EliteTimer.Enabled=True
+		End Sub
+	#tag EndEvent
+#tag EndEvents
 #tag Events rectBackground
 	#tag Event
 		Sub Open()
@@ -6019,26 +6118,6 @@ End
 		    Return True
 		  End If
 		End Function
-	#tag EndEvent
-#tag EndEvents
-#tag Events cbDisplayElite
-	#tag Event
-		Sub Action()
-		  If me.Value Then
-		    EliteTimer.Enabled=True
-		  Else
-		    EliteTimer.Enabled=False
-		    MoveEliteData("Out")
-		    MoveClock("In")
-		    Redim arEliteStackAthlete(-1)
-		    Redim arEliteStackStopTime(-1)
-		  End If
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub Open()
-		  EliteTimer.Enabled=True
-		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events EliteTimer
