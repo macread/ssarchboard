@@ -4840,11 +4840,11 @@ End
 		      If GetPassingType(Source) = "Elite Trigger" and cbDisplayElite.Value Then 
 		        
 		        'push on elite display stack
-		        If pmGender.Text = "Men Only"  And arGender = "M" Then
+		        If pmGender.Text = "Men Only"  And arGender(idx) = "M" Then
 		          EliteStack_Push(idx)
-		        ElseIf  pmGender.Text = "Women Only" And arGender = "F" Then
+		        ElseIf  pmGender.Text = "Women Only" And arGender(idx) = "F" Then
 		          EliteStack_Push(idx)
-		        Else pmGender.Text = "Both" Then
+		        ElseIf pmGender.Text = "Both" Then
 		          EliteStack_Push(idx)
 		        End 
 		        
