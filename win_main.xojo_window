@@ -1307,7 +1307,7 @@ Begin Window win_main
       TopLeftColor    =   &c00000000
       Transparent     =   False
       Visible         =   True
-      Width           =   156
+      Width           =   75
    End
    Begin Rectangle rectText
       AutoDeactivate  =   True
@@ -1332,7 +1332,7 @@ Begin Window win_main
       TopLeftColor    =   &c00000000
       Transparent     =   False
       Visible         =   True
-      Width           =   156
+      Width           =   75
    End
    Begin Timer RunningClock_Update
       Index           =   -2147483648
@@ -2511,41 +2511,6 @@ Begin Window win_main
       Visible         =   True
       Width           =   90
    End
-   Begin Label lblRunningClock
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   60
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   25
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   True
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   63
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   "00:00:00"
-      TextAlign       =   1
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   1000
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   252
-   End
    Begin Rectangle Rectangle1
       AutoDeactivate  =   True
       BorderWidth     =   1
@@ -3240,6 +3205,265 @@ Begin Window win_main
       Value           =   False
       Visible         =   True
       Width           =   175
+   End
+   Begin Rectangle rectBckGndSet1
+      AutoDeactivate  =   True
+      BorderWidth     =   1
+      BottomRightColor=   &c00000000
+      Enabled         =   True
+      FillColor       =   &c00000000
+      Height          =   21
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   814
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   88
+      TabPanelIndex   =   0
+      Top             =   472
+      TopLeftColor    =   &c00000000
+      Transparent     =   False
+      Visible         =   True
+      Width           =   75
+   End
+   Begin Rectangle rectTextSet1
+      AutoDeactivate  =   True
+      BorderWidth     =   1
+      BottomRightColor=   &c00000000
+      Enabled         =   True
+      FillColor       =   &cFFFFFF00
+      Height          =   21
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   893
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   89
+      TabPanelIndex   =   0
+      Top             =   472
+      TopLeftColor    =   &c00000000
+      Transparent     =   False
+      Visible         =   True
+      Width           =   75
+   End
+   Begin Rectangle rectBckGndSet2
+      AutoDeactivate  =   True
+      BorderWidth     =   1
+      BottomRightColor=   &c00000000
+      Enabled         =   True
+      FillColor       =   &c00000000
+      Height          =   21
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   814
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   90
+      TabPanelIndex   =   0
+      Top             =   504
+      TopLeftColor    =   &c00000000
+      Transparent     =   False
+      Visible         =   True
+      Width           =   75
+   End
+   Begin Rectangle rectTextSet2
+      AutoDeactivate  =   True
+      BorderWidth     =   1
+      BottomRightColor=   &c00000000
+      Enabled         =   True
+      FillColor       =   &cFFFFFF00
+      Height          =   21
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   893
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   91
+      TabPanelIndex   =   0
+      Top             =   504
+      TopLeftColor    =   &c00000000
+      Transparent     =   False
+      Visible         =   True
+      Width           =   75
+   End
+   Begin PushButton PushButton1
+      AutoDeactivate  =   True
+      Bold            =   False
+      ButtonStyle     =   "0"
+      Cancel          =   False
+      Caption         =   "Set 1"
+      Default         =   False
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   718
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   92
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   472
+      Transparent     =   False
+      Underline       =   False
+      Visible         =   True
+      Width           =   80
+   End
+   Begin PushButton PushButton2
+      AutoDeactivate  =   True
+      Bold            =   False
+      ButtonStyle     =   "0"
+      Cancel          =   False
+      Caption         =   "Set 2"
+      Default         =   False
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   718
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   93
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   504
+      Transparent     =   False
+      Underline       =   False
+      Visible         =   True
+      Width           =   80
+   End
+   Begin RadioButton rbColorSet1
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   "Click to use color set 1"
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   980
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   94
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   472
+      Transparent     =   False
+      Underline       =   False
+      Value           =   True
+      Visible         =   True
+      Width           =   24
+   End
+   Begin RadioButton rbColorSet2
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   "Click to use color set 2"
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   980
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   95
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   504
+      Transparent     =   False
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   24
+   End
+   Begin Label lblRunningClock
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   60
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   25
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   True
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   63
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   "00:00:00"
+      TextAlign       =   1
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   1000
+      Transparent     =   True
+      Underline       =   False
+      Visible         =   True
+      Width           =   252
    End
 End
 #tag EndWindow
@@ -4676,6 +4900,8 @@ End
 		  
 		  lbList.DefaultRowHeight=rowHeight
 		  
+		  rectBackground.FillColor=Color_Background
+		  
 		  lblRunningClock.TextColor=Color_Font
 		  lblRunningClock.TextFont=Display_Font
 		  
@@ -4778,6 +5004,8 @@ End
 		  End Select
 		  
 		  win_external.lbList.DefaultRowHeight=rowHeight
+		  
+		  win_external.BackColor=Color_Background
 		  
 		  win_external.lblRunningClock.TextColor=Color_Font
 		  win_external.lblRunningClock.TextFont=Display_Font
@@ -5410,9 +5638,9 @@ End
 #tag Events bbBackGroundColor
 	#tag Event
 		Sub Action()
-		  Dim b as Boolean
+		  
 		  Color_Background=CMY(.35,.9,.6) //choose the default color shown in color picker
-		  b=SelectColor(Color_Background,"Select a Color")
+		  call SelectColor(Color_Background,"Select a Color")
 		  rectBackground.FillColor=Color_Background
 		  rectBackgroundColor.FillColor=Color_Background
 		  
@@ -5848,17 +6076,6 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events lblRunningClock
-	#tag Event
-		Sub Open()
-		  me.TextSize=ClockLargeFontSize
-		  me.TextColor=Color_Font
-		  me.TextFont=Display_Font
-		  
-		  
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag Events lbList
 	#tag Event
 		Function CellTextPaint(g As Graphics, row As Integer, column As Integer, x as Integer, y as Integer) As Boolean
@@ -6214,6 +6431,81 @@ End
 		    MoveClock("In")
 		    
 		  end if
+		  
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events rectBckGndSet1
+	#tag Event
+		Sub Open()
+		  me.FillColor=Color_Background
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events rectTextSet1
+	#tag Event
+		Sub Open()
+		  me.FillColor=Color_Font
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events rectBckGndSet2
+	#tag Event
+		Sub Open()
+		  me.FillColor=Color_Background
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events rectTextSet2
+	#tag Event
+		Sub Open()
+		  me.FillColor=Color_Font
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events PushButton1
+	#tag Event
+		Sub Action()
+		  rectBckGndSet1.FillColor = rectBackgroundColor.FillColor
+		  rectTextSet1.FillColor = rectText.FillColor
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events PushButton2
+	#tag Event
+		Sub Action()
+		  rectBckGndSet2.FillColor = rectBackgroundColor.FillColor
+		  rectTextSet2.FillColor = rectText.FillColor
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events rbColorSet1
+	#tag Event
+		Sub Action()
+		  Color_Background=rectBckGndSet1.FillColor
+		  Color_Font=rectTextSet1.FillColor
+		  
+		  SetStyle
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events rbColorSet2
+	#tag Event
+		Sub Action()
+		  Color_Background=rectBckGndSet2.FillColor
+		  Color_Font=rectTextSet2.FillColor
+		  
+		  SetStyle
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events lblRunningClock
+	#tag Event
+		Sub Open()
+		  me.TextSize=ClockLargeFontSize
+		  me.TextColor=Color_Font
+		  me.TextFont=Display_Font
 		  
 		  
 		End Sub
