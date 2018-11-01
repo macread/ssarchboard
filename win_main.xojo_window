@@ -26,6 +26,64 @@ Begin Window win_main
    Title           =   "Sportstats Arch Board"
    Visible         =   True
    Width           =   1020
+   Begin GroupBox GroupBox4
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   ""
+      Enabled         =   True
+      Height          =   25
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   270
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   97
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   562
+      Transparent     =   False
+      Underline       =   False
+      Visible         =   True
+      Width           =   116
+   End
+   Begin GroupBox GroupBox3
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   ""
+      Enabled         =   True
+      Height          =   73
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   711
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   96
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   463
+      Transparent     =   False
+      Underline       =   False
+      Visible         =   True
+      Width           =   295
+   End
    Begin GroupBox GroupBox2
       AutoDeactivate  =   True
       Bold            =   False
@@ -651,35 +709,6 @@ Begin Window win_main
       Visible         =   True
       Width           =   100
    End
-   Begin Slider sliderFontSize
-      AutoDeactivate  =   True
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Left            =   283
-      LineStep        =   1
-      LiveScroll      =   True
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Maximum         =   32
-      Minimum         =   8
-      PageStep        =   20
-      Scope           =   0
-      TabIndex        =   14
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TickStyle       =   "1"
-      Top             =   481
-      Transparent     =   False
-      Value           =   16
-      Visible         =   True
-      Width           =   144
-   End
    Begin Label Label10
       AutoDeactivate  =   True
       Bold            =   False
@@ -955,76 +984,6 @@ Begin Window win_main
       Visible         =   True
       Width           =   175
    End
-   Begin Label lblFontLowSize
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   284
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   23
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   "8"
-      TextAlign       =   1
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   458
-      Transparent     =   False
-      Underline       =   False
-      Visible         =   True
-      Width           =   17
-   End
-   Begin Label lblFontHighSize
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   410
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   24
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   "32"
-      TextAlign       =   1
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   458
-      Transparent     =   False
-      Underline       =   False
-      Visible         =   True
-      Width           =   17
-   End
    Begin PopupMenu pmDisplaySize
       AutoDeactivate  =   True
       Bold            =   False
@@ -1158,41 +1117,6 @@ Begin Window win_main
       Underline       =   False
       Visible         =   True
       Width           =   149
-   End
-   Begin Label lblFontSize
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   338
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   29
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   "16"
-      TextAlign       =   1
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   493
-      Transparent     =   False
-      Underline       =   False
-      Visible         =   True
-      Width           =   28
    End
    Begin BevelButton bbBackGroundColor
       AcceptFocus     =   True
@@ -1401,7 +1325,7 @@ Begin Window win_main
       Underline       =   False
       Value           =   False
       Visible         =   True
-      Width           =   52
+      Width           =   45
    End
    Begin Label Label14
       AutoDeactivate  =   True
@@ -2033,10 +1957,10 @@ Begin Window win_main
       HelpTag         =   "Select the number of seconds after the last athlete passes to redisplay the running clock."
       Index           =   -2147483648
       InitialParent   =   ""
-      InitialValue    =   "Always On\n10 seconds\n30 seconds\n45 seconds\n60 seconds\n90 seconds\n120 seconds\n180 seconds\n240 seconds\n360 seconds"
+      InitialValue    =   "Always On\n1 seconds\n2 seconds\n3 seconds\n5 seconds\n10 seconds\n15 seconds\n30 seconds\n45 seconds\n60 seconds\n90 seconds\n120 seconds"
       Italic          =   False
       Left            =   403
-      ListIndex       =   4
+      ListIndex       =   9
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -3465,6 +3389,49 @@ Begin Window win_main
       Visible         =   True
       Width           =   252
    End
+   Begin TextField tfFontSize
+      AcceptTabs      =   False
+      Alignment       =   0
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   False
+      BackColor       =   &cFFFFFF00
+      Bold            =   False
+      Border          =   True
+      CueText         =   "16"
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      Height          =   25
+      HelpTag         =   ""
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   279
+      LimitText       =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Mask            =   ""
+      Password        =   False
+      ReadOnly        =   False
+      Scope           =   0
+      TabIndex        =   98
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   "16"
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   477
+      Transparent     =   False
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   35
+   End
 End
 #tag EndWindow
 
@@ -4535,8 +4502,7 @@ End
 		        pmAthletePosition.ListIndex = Val(n.GetAttribute("value"))
 		        
 		      Case  "Font Size"
-		        lblFontSize.Text =  n.GetAttribute("value")
-		        sliderFontSize.Value = Val(n.GetAttribute("value"))
+		        tfFontSize.Text =  n.GetAttribute("value")
 		        
 		      Case  "Time Truncation"
 		        pmTimeTrucation.ListIndex = Val(n.GetAttribute("value"))
@@ -4573,11 +4539,40 @@ End
 		        
 		      Case  "Back Ground Color"
 		        IntColor = Val(n.GetAttribute("value"))
-		        Color_Background = Color(IntColor)
+		        rectBackgroundColor.FillColor = Color(IntColor)
 		        
 		      Case  "Font Color"
 		        IntColor = Val(n.GetAttribute("value"))
-		        Color_Font = Color(IntColor)
+		        rectText.FillColor = Color(IntColor)
+		        
+		      Case  "Back Ground Color Set 1"
+		        IntColor = Val(n.GetAttribute("value"))
+		        rectBckGndSet1.FillColor = Color(IntColor)
+		        
+		      Case  "Font Color Set 1"
+		        IntColor = Val(n.GetAttribute("value"))
+		        rectTextSet1.FillColor = Color(IntColor)
+		        
+		      Case  "Back Ground Color Set 2"
+		        IntColor = Val(n.GetAttribute("value"))
+		        rectBckGndSet2.FillColor = Color(IntColor)
+		        
+		      Case  "Font Color Set 2"
+		        IntColor = Val(n.GetAttribute("value"))
+		        rectTextSet2.FillColor = Color(IntColor)
+		        
+		      Case  "Color Set"
+		        If n.GetAttribute("value") = "Set 1" Then
+		          rbColorSet1.Value=True
+		          rbColorSet2.Value=False
+		          Color_Background=rectBckGndSet1.FillColor
+		          Color_Font=rectTextSet1.FillColor
+		        Else      
+		          rbColorSet1.Value=False
+		          rbColorSet2.Value=True        
+		          Color_Background=rectBckGndSet2.FillColor
+		          Color_Font=rectTextSet2.FillColor
+		        End If
 		        
 		      Case  "Banner Path"
 		        LoadBanner(n.GetAttribute("value"))
@@ -4593,6 +4588,31 @@ End
 		        
 		      Case  "Clock 4 Text"
 		        tfClk4Lbl.Text = n.GetAttribute("value")
+		        
+		      Case "Display Once"
+		        If n.GetAttribute("value") = "True" Then
+		          cbDisplayOnce.Value=True
+		        Else
+		          cbDisplayOnce.Value=False
+		        End If
+		        
+		      Case "Display Elite"
+		        If n.GetAttribute("value") = "True" Then
+		          cbDisplayElite.Value=True
+		        Else
+		          cbDisplayElite.Value=False
+		        End If
+		        
+		      Case "Gender"
+		        i = 0 
+		        Do
+		          pmGender.ListIndex = i
+		          i = i + 1
+		        Loop Until ((pmGender.Text = n.GetAttribute("value")) Or ( i >= pmGender.ListCount - 1))
+		        
+		      Case  "Delay Time"
+		        tfSeconds.Text = n.GetAttribute("value")
+		        
 		        
 		      End Select
 		      
@@ -4631,7 +4651,7 @@ End
 		  
 		  prefNode = root.AppendChild(xml.CreateElement("Preference"))
 		  prefNode.SetAttribute("name", "Font Size")
-		  prefNode.SetAttribute("value", lblFontSize.Text)
+		  prefNode.SetAttribute("value", tfFontSize.Text)
 		  
 		  prefNode = root.AppendChild(xml.CreateElement("Preference"))
 		  prefNode.SetAttribute("name", "Time Truncation")
@@ -4681,6 +4701,30 @@ End
 		  prefNode.SetAttribute("value", Str(Color_Font))
 		  
 		  prefNode = root.AppendChild(xml.CreateElement("Preference"))
+		  prefNode.SetAttribute("name", "Back Ground Color Set 1")
+		  prefNode.SetAttribute("value", Str(rectBckGndSet1.FillColor))
+		  
+		  prefNode = root.AppendChild(xml.CreateElement("Preference"))
+		  prefNode.SetAttribute("name", "Font Color Set 1")
+		  prefNode.SetAttribute("value", Str(rectTextSet1.FillColor))
+		  
+		  prefNode = root.AppendChild(xml.CreateElement("Preference"))
+		  prefNode.SetAttribute("name", "Back Ground Color Set 2")
+		  prefNode.SetAttribute("value", Str(rectBckGndSet2.FillColor))
+		  
+		  prefNode = root.AppendChild(xml.CreateElement("Preference"))
+		  prefNode.SetAttribute("name", "Font Color Set 2")
+		  prefNode.SetAttribute("value", Str(rectTextSet2.FillColor))
+		  
+		  prefNode = root.AppendChild(xml.CreateElement("Preference"))
+		  prefNode.SetAttribute("name", "Color Set")
+		  If rbColorSet1.Value Then
+		    prefNode.SetAttribute("value", "Set 1")
+		  Else
+		    prefNode.SetAttribute("value","Set 2")
+		  End If
+		  
+		  prefNode = root.AppendChild(xml.CreateElement("Preference"))
 		  prefNode.SetAttribute("name", "Banner Path")
 		  prefNode.SetAttribute("value", BannerPath)
 		  
@@ -4699,6 +4743,30 @@ End
 		  prefNode = root.AppendChild(xml.CreateElement("Preference"))
 		  prefNode.SetAttribute("name", "Clock 4 Text")
 		  prefNode.SetAttribute("value", tfClk4Lbl.Text)
+		  
+		  prefNode = root.AppendChild(xml.CreateElement("Preference"))
+		  prefNode.SetAttribute("name", "Display Once")
+		  If cbDisplayOnce.Value Then
+		    prefNode.SetAttribute("value", "True")
+		  Else
+		    prefNode.SetAttribute("value", "False")
+		  End If
+		  
+		  prefNode = root.AppendChild(xml.CreateElement("Preference"))
+		  prefNode.SetAttribute("name", "Display Elite")
+		  If cbDisplayElite.Value Then
+		    prefNode.SetAttribute("value", "True")
+		  Else
+		    prefNode.SetAttribute("value", "False")
+		  End If
+		  
+		  prefNode = root.AppendChild(xml.CreateElement("Preference"))
+		  prefNode.SetAttribute("name", "Gender")
+		  prefNode.SetAttribute("value", pmGender.Text)
+		  
+		  prefNode = root.AppendChild(xml.CreateElement("Preference"))
+		  prefNode.SetAttribute("name", "Delay Time")
+		  prefNode.SetAttribute("value", tfSeconds.Text)
 		  
 		  'write the document
 		  f=SpecialFolder.Preferences.Child("Arch Board.plist")
@@ -4825,7 +4893,7 @@ End
 		  Dim row, rowHeight as integer
 		  Dim Col_FlagWidth, Col_NumberWidth, Col_NameWidth, Col_TotalTimeWidth As String
 		  
-		  lbList.TextSize = sliderFontSize.Value
+		  lbList.TextSize = tfFontSize.Text.Val
 		  lbList.TextFont = Display_Font
 		  
 		  If pmDisplaySize.ListIndex=0 Then
@@ -4877,7 +4945,7 @@ End
 		  lbList.ColumnAlignment(App.ColNo_Name)=Listbox.AlignLeft
 		  lbList.ColumnAlignment(App.ColNo_TotalTime)=Listbox.AlignRight
 		  
-		  Select Case sliderFontSize.Value
+		  Select Case tfFontSize.text.Val
 		  Case Is <= 20 
 		    rowHeight = 21
 		    lbList.DeleteAllRows
@@ -4930,7 +4998,7 @@ End
 		  Dim row, rowHeight as integer
 		  Dim Col_FlagWidth, Col_NumberWidth, Col_NameWidth, Col_TotalTimeWidth As String
 		  
-		  win_external.lbList.TextSize = sliderFontSize.Value
+		  win_external.lbList.TextSize = val(tfFontSize.Text)
 		  win_external.lbList.TextFont = Display_Font
 		  
 		  If pmDisplaySize.ListIndex=0 Then
@@ -4982,7 +5050,7 @@ End
 		  win_external.lbList.ColumnAlignment(App.ColNo_Name)=Listbox.AlignLeft
 		  win_external.lbList.ColumnAlignment(App.ColNo_TotalTime)=Listbox.AlignRight
 		  
-		  Select Case sliderFontSize.Value
+		  Select Case val(tfFontSize.Text)
 		  Case Is <= 20 
 		    rowHeight = 21
 		    win_external.lbList.DeleteAllRows
@@ -5427,14 +5495,6 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events sliderFontSize
-	#tag Event
-		Sub ValueChanged()
-		  SetStyle
-		  lblFontSize.Text=Str(me.Value)
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag Events bbMediaLeft
 	#tag Event
 		Sub Action()
@@ -5584,22 +5644,6 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events lblFontLowSize
-	#tag Event
-		Sub Open()
-		  me.TextSize=8
-		  
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events lblFontHighSize
-	#tag Event
-		Sub Open()
-		  me.TextSize=8
-		  
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag Events pmDisplaySize
 	#tag Event
 		Sub Change()
@@ -5624,14 +5668,6 @@ End
 	#tag Event
 		Sub Change()
 		  PositionAthleteData
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events lblFontSize
-	#tag Event
-		Sub Open()
-		  me.TextSize=8
-		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -6508,6 +6544,18 @@ End
 		  me.TextFont=Display_Font
 		  
 		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events tfFontSize
+	#tag Event
+		Sub TextChange()
+		  SetStyle
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub LostFocus()
+		  SetStyle
 		End Sub
 	#tag EndEvent
 #tag EndEvents
