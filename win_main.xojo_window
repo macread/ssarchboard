@@ -3505,26 +3505,55 @@ End
 
 	#tag Method, Flags = &h0
 		Sub ClearSGList()
-		  lbList.RowPicture(1)=SetFlag("")
+		  lbList.RowPicture(0)=SetFlag("")       
+		  lbList.CellTag(0,App.ColNo_Flag)=""
+		  lbList.Cell(0,App.ColNo_Number)=""
+		  lbList.Cell(0,App.ColNo_Name)=""
+		  lbList.Cell(0,App.ColNo_TotalTime)=TruncateTime("")
+		  
+		  lbList.RowPicture(1)=SetFlag("")     
+		  lbList.CellTag(1,App.ColNo_Flag)=""
 		  lbList.Cell(1,App.ColNo_Number)=""
 		  lbList.Cell(1,App.ColNo_Name)=""
-		  lbList.Cell(1,App.ColNo_TotalTime)=""
+		  lbList.Cell(1,App.ColNo_TotalTime)=TruncateTime("")
 		  
-		  lbList.RowPicture(2)=SetFlag("")
+		  lbList.RowPicture(2)=SetFlag("")     
+		  lbList.CellTag(2,App.ColNo_Flag)=""
 		  lbList.Cell(2,App.ColNo_Number)=""
 		  lbList.Cell(2,App.ColNo_Name)=""
-		  lbList.Cell(2,App.ColNo_TotalTime)=""
+		  lbList.Cell(2,App.ColNo_TotalTime)=TruncateTime("")
 		  
-		  lbList.RowPicture(3)=SetFlag("")
+		  lbList.RowPicture(3)=SetFlag("")     
+		  lbList.CellTag(3,App.ColNo_Flag)=""
 		  lbList.Cell(3,App.ColNo_Number)=""
 		  lbList.Cell(3,App.ColNo_Name)=""
-		  lbList.Cell(3,App.ColNo_TotalTime)=""
+		  lbList.Cell(3,App.ColNo_TotalTime)=TruncateTime("")
 		  
-		  lbList.RowPicture(4)=SetFlag("")
-		  lbList.Cell(4,App.ColNo_Number)=""
-		  lbList.Cell(4,App.ColNo_Name)=""
-		  lbList.Cell(4,App.ColNo_TotalTime)=""
-		  
+		  If ExternalWindowRunning Then
+		    win_external.lbList.RowPicture(0)=SetFlag("")    
+		    win_external.lbList.CellTag(0,App.ColNo_Flag)=""
+		    win_external.lbList.Cell(0,App.ColNo_Number)=""
+		    win_external.lbList.Cell(0,App.ColNo_Name)=""
+		    win_external.lbList.Cell(0,App.ColNo_TotalTime)=TruncateTime("")
+		    
+		    win_external.lbList.RowPicture(1)=SetFlag("")       
+		    win_external.lbList.CellTag(1,App.ColNo_Flag)=""
+		    win_external.lbList.Cell(1,App.ColNo_Number)=""
+		    win_external.lbList.Cell(1,App.ColNo_Name)=""
+		    win_external.lbList.Cell(1,App.ColNo_TotalTime)=TruncateTime("")
+		    
+		    win_external.lbList.RowPicture(2)=SetFlag("")       
+		    win_external.lbList.CellTag(2,App.ColNo_Flag)=""
+		    win_external.lbList.Cell(2,App.ColNo_Number)=""
+		    win_external.lbList.Cell(2,App.ColNo_Name)=""
+		    win_external.lbList.Cell(2,App.ColNo_TotalTime)=TruncateTime("")
+		    
+		    win_external.lbList.RowPicture(3)=SetFlag("")       
+		    win_external.lbList.CellTag(3,App.ColNo_Flag)=""
+		    win_external.lbList.Cell(3,App.ColNo_Number)=""
+		    win_external.lbList.Cell(3,App.ColNo_Name)=""
+		    win_external.lbList.Cell(3,App.ColNo_TotalTime)=TruncateTime("")
+		  End If
 		End Sub
 	#tag EndMethod
 
@@ -3536,6 +3565,7 @@ End
 		  Dim CurrentTime As New Date
 		  Dim Time As String
 		  Dim i As Integer
+		  Dim StopTime As Double
 		  Dim StopTimeExists As Boolean
 		  
 		  StopTimeExists = false
@@ -3548,14 +3578,15 @@ End
 		  If lblHeadShotPath.Text <>"" Then
 		    f = GetFolderItem(HeadShotPath+arBib(AthleteIdx)+".jpg")
 		    If f.Exists Then
-		      'nop
+		      p=ScalePicture(f.OpenAsVectorPicture, 100, 100)  
+		      MoveVideo("Right","Out")
+		      MoveLogo("Right","In")
+		      p.Transparent=1
+		      canLogoRight.Backdrop=p
 		    Else
-		      f = GetFolderItem(LogoPathRight)
+		      LoadMediaRight(LogoPathRight)
 		    End If
-		    MoveVideo("Right","Out")
-		    MoveLogo("Right","In")
-		    p=ScalePicture(f.OpenAsVectorPicture, 100, 100)  
-		    canLogoRight.Backdrop=p
+		    
 		  End If
 		  
 		  f = GetFolderItem("").Child("flags").Child(Lowercase(arCountry(AthleteIdx))+".png")
@@ -3603,7 +3634,8 @@ End
 		  Next
 		  
 		  If StopTimeExists Then
-		    If (CurrentTime.TotalSeconds > (LastPassingTime+val(tfSeconds.Text)) and LastPassingTime>0 and arEliteStackAthlete.Ubound>0) Then
+		    StopTime = app.ConvertTimeToSeconds(arEliteStackStopTime(StackIdx))
+		    If (CurrentTime.TotalSeconds > (StopTime+val(tfSeconds.Text))) Then
 		      EliteStack_Remove
 		    End If
 		  End If
@@ -3614,12 +3646,10 @@ End
 	#tag Method, Flags = &h0
 		Sub EliteStack_AddTime(idx As Integer, Time As String)
 		  Dim StackIdx as Integer
-		  Dim CurrentTime as New Date
 		  
 		  StackIdx = arEliteStackAthlete.IndexOf(idx)
 		  If StackIdx >= 0 Then
 		    arEliteStackStopTime(StackIdx) = Time
-		    LastPassingTime = Currenttime.TotalSeconds
 		  End If
 		End Sub
 	#tag EndMethod
@@ -3940,7 +3970,7 @@ End
 		    Else
 		      MoveVideo("Left","Out")
 		      MoveLogo("Left","In")
-		      p=f.OpenAsVectorPicture    
+		      p=f.OpenAsVectorPicture
 		      canLogoLeft.Backdrop=p
 		      If ExternalWindowRunning Then
 		        win_external.canLogoLeft.Backdrop=p
@@ -5403,6 +5433,7 @@ End
 		Sub Action()
 		  If me.Value Then
 		    EliteTimer.Enabled=True
+		    ClearSGList
 		  Else
 		    EliteTimer.Enabled=False
 		    MoveEliteData("Out")
@@ -5577,55 +5608,7 @@ End
 		    
 		    bbTestData.Caption="Clear Test Data"
 		  else
-		    lbList.RowPicture(0)=SetFlag("")       
-		    lbList.CellTag(0,App.ColNo_Flag)=""
-		    lbList.Cell(0,App.ColNo_Number)=""
-		    lbList.Cell(0,App.ColNo_Name)=""
-		    lbList.Cell(0,App.ColNo_TotalTime)=TruncateTime("")
-		    
-		    lbList.RowPicture(1)=SetFlag("")     
-		    lbList.CellTag(1,App.ColNo_Flag)=""
-		    lbList.Cell(1,App.ColNo_Number)=""
-		    lbList.Cell(1,App.ColNo_Name)=""
-		    lbList.Cell(1,App.ColNo_TotalTime)=TruncateTime("")
-		    
-		    lbList.RowPicture(2)=SetFlag("")     
-		    lbList.CellTag(2,App.ColNo_Flag)=""
-		    lbList.Cell(2,App.ColNo_Number)=""
-		    lbList.Cell(2,App.ColNo_Name)=""
-		    lbList.Cell(2,App.ColNo_TotalTime)=TruncateTime("")
-		    
-		    lbList.RowPicture(3)=SetFlag("")     
-		    lbList.CellTag(3,App.ColNo_Flag)=""
-		    lbList.Cell(3,App.ColNo_Number)=""
-		    lbList.Cell(3,App.ColNo_Name)=""
-		    lbList.Cell(3,App.ColNo_TotalTime)=TruncateTime("")
-		    
-		    If ExternalWindowRunning Then
-		      win_external.lbList.RowPicture(0)=SetFlag("")    
-		      win_external.lbList.CellTag(0,App.ColNo_Flag)=""
-		      win_external.lbList.Cell(0,App.ColNo_Number)=""
-		      win_external.lbList.Cell(0,App.ColNo_Name)=""
-		      win_external.lbList.Cell(0,App.ColNo_TotalTime)=TruncateTime("")
-		      
-		      win_external.lbList.RowPicture(1)=SetFlag("")       
-		      win_external.lbList.CellTag(1,App.ColNo_Flag)=""
-		      win_external.lbList.Cell(1,App.ColNo_Number)=""
-		      win_external.lbList.Cell(1,App.ColNo_Name)=""
-		      win_external.lbList.Cell(1,App.ColNo_TotalTime)=TruncateTime("")
-		      
-		      win_external.lbList.RowPicture(2)=SetFlag("")       
-		      win_external.lbList.CellTag(2,App.ColNo_Flag)=""
-		      win_external.lbList.Cell(2,App.ColNo_Number)=""
-		      win_external.lbList.Cell(2,App.ColNo_Name)=""
-		      win_external.lbList.Cell(2,App.ColNo_TotalTime)=TruncateTime("")
-		      
-		      win_external.lbList.RowPicture(3)=SetFlag("")       
-		      win_external.lbList.CellTag(3,App.ColNo_Flag)=""
-		      win_external.lbList.Cell(3,App.ColNo_Number)=""
-		      win_external.lbList.Cell(3,App.ColNo_Name)=""
-		      win_external.lbList.Cell(3,App.ColNo_TotalTime)=TruncateTime("")
-		    End If
+		    ClearSGList
 		    
 		    'MoveAthleteData("In")
 		    
@@ -6394,13 +6377,18 @@ End
 		    
 		    EliteDisplay_LoadAthlete(arEliteStackAthlete(idx), idx)
 		    
-		    MoveClock("Out")
-		    MoveEliteData("In")
+		    if ClockPosition = "In" Then
+		      MoveClock("Out")
+		      MoveEliteData("In")
+		    End If
 		    
 		  Else
 		    
-		    MoveClock("In")
-		    MoveEliteData("Out")
+		    If ClockPosition="Out" Then
+		      MoveClock("In")
+		      MoveEliteData("Out")
+		      LoadMediaRight(LogoPathRight)
+		    End If
 		    
 		  End If
 		End Sub
